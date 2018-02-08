@@ -1,0 +1,15 @@
+<!doctype HTML>
+<html>
+  <head><title>Movie Form</title></head>
+  <body>
+     <form action="/save_movie" method="POST">
+        <p>What is the movie you want to save?</p>
+          <p>
+            <label>title</label><input type="text" name="title" placeholder="{{model.title}}"/>
+            <label>year</label><input type="number" name="year" placeholder="{{model.year}}"/>
+            <label>imdb</label><input type="text" name="imdb" placeholder="{{model.imdb}}"/>
+          </p>
+        <input type="submit" value="Submit"/>
+     </form>
+  </body>
+</html>
