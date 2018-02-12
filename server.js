@@ -10,11 +10,19 @@ const commandLineUtils = require('./utils/commandLineUtils.js');
  * Routes
  */
 const movieSearchRoute = require('./modules/movie');
+const AlphaVantageRoute = require('./modules/alphaVantage');
 const errorHandlerRoute = require('./modules/error');
 
 const app = express();
 
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    next();
+});
+
 app.use(movieSearchRoute);
+app.use(AlphaVantageRoute);
 app.use(errorHandlerRoute);
 
 /**
