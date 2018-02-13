@@ -1,0 +1,55 @@
+<mat-card>
+  <h1>Save a Movie</h1>
+  <mat-form-field>
+    <input matInput id="title" [(ngModel)]="movieToSave.title" placeholder="Title of the movie?">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput id="year" [(ngModel)]="movieToSave.year" placeholder="Released year?">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput id="imdb" [(ngModel)]="movieToSave.imdb" placeholder="Imdb link?">
+  </mat-form-field>
+  
+  <button mat-raised-button (click)="saveMovie()">Save movie</button>
+  <mat-spinner [style.display]="showSaveSpinner ? 'block' : 'none'"></mat-spinner>
+</mat-card>
+
+<br *ngIf="!!savedMovie">
+
+<mat-card *ngIf="!!savedMovie">
+  <h1>Movie Saved</h1>
+  <pre>{{ savedMovie | json }}</pre>
+</mat-card>
+
+<br>
+
+<mat-card>
+  <h1>Search a Movie</h1>
+  <mat-form-field>
+    <input matInput id="title" [(ngModel)]="movieToSearch.title" placeholder="Title of the movie?">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput id="yearMin" [(ngModel)]="movieToSearch.yearMin" placeholder="Minimum released year?">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput id="yearMax" [(ngModel)]="movieToSearch.yearMax" placeholder="Maximum released year?">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput id="imdb" [(ngModel)]="movieToSearch.imdb" placeholder="Imdb link?">
+  </mat-form-field>
+
+  <button mat-raised-button (click)="searchMovies()">Search movies</button>
+  <mat-spinner [style.display]="showSearchSpinner ? 'block' : 'none'"></mat-spinner>
+</mat-card>
+
+<br *ngIf="!!searchedMovies">
+
+<mat-card *ngIf="!!searchedMovies">
+  <h1>Movies Searched</h1>
+  <pre>{{ searchedMovies | json }}</pre>
+</mat-card>
