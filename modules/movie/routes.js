@@ -28,14 +28,15 @@ app.get('/', function(req, res, next) {
 /**
  * Display de form to save a new movie
  */
-app.get('/save_movie', function(req, res, next) {
-    res.render('movieForm', { 'model' : {'title': 'write a movie', 'year': '1993', 'imdb': 'http://...'} });
-});
+// app.get('/save_movie', function(req, res, next) {
+//     res.render('movieForm', { 'model' : {'title': 'write a movie', 'year': '1993', 'imdb': 'http://...'} });
+// });
 
 /**
  * Save a new movie
  */
-app.post('/save_movie', function(req, res, next) {
+app.post('/movie', function(req, res, next) {
+    console.log('save a movie');
 
     const TITLE = req.body.title;
     const YEAR = req.body.year;
@@ -63,14 +64,15 @@ app.post('/save_movie', function(req, res, next) {
             db.close();
         });
         
-        res.render('sucess', { 'model' : MOVIE });
+        res.status(200).send(MOVIE);
     }
+    // res.status(200).send({'status': 'OK'});
 });
 
 /**
  * Method to research and display movies
  */
-app.get('/search_movies', function(req, res, next) {
+app.get('/movie', function(req, res, next) {
 
     var query = movieSearchService.getQueryWithFormParameters(req.query);
     var resultats = '';
@@ -89,15 +91,15 @@ app.get('/search_movies', function(req, res, next) {
                 'projection' : {
                     '_id': 0,
                     'title': 1,
+                    'year': 1,
+                    'imdb': 1
                 },
                 'limit': 5
             };
 
             db.db(DB_CREDENTIALS.DBNAME).collection('movie').find(query, options).toArray((err, movies) => {
 
-                movies.forEach(movie => resultats += movie.title + '\n');
-
-                movieSearchService.renderSearchForm(res, req.query, resultats);
+                res.status(200).send(movies);
             });
 
             // db.db(dbName).collection(collName).find(query, options).toArray((err, docs) => {docs.forEach(doc => ...)});
@@ -107,7 +109,7 @@ app.get('/search_movies', function(req, res, next) {
         });
     } else {
 
-        movieSearchService.renderSearchForm(res, req.query, null);
+        // TODO throw an error
 
     }
 });
