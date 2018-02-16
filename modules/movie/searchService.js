@@ -14,23 +14,6 @@ module.exports = {
         log("query", query);
 
         return query;
-    },
-
-    /**
-     * Renders the search Form
-     */
-    renderSearchForm: function(res, query, results) {
-        
-        res.render('searchForm', {
-            'placeHolder' : {
-                'title': 'write a movie',
-                'yearMin': '1993',
-                'yearMax': '1997',
-                'imdb': 'http://...'
-            },
-            'model': query,
-            'resultats': results
-        });
     }
 }
 

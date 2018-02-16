@@ -1,6 +1,5 @@
 const express = require('express');
 const engines = require('consolidate');
-const assert = require('assert');
 
 const app = module.exports = express();
 
@@ -12,6 +11,6 @@ app.set('views', __dirname);
 app.use(
     function errorHandler(err, req, res, next) {
         console.log("Error occured: " + err);
-        res.status(400).render('error_template', { error: err });
+        res.status(400).send({ error: err });
     }
 );

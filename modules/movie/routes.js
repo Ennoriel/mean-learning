@@ -2,7 +2,6 @@ const express = require('express');
 const engines = require('consolidate');
 const mongoDb = require('mongodb');
 const bodyParser = require('body-parser');
-const assert = require('assert');
 
 var DB_CREDENTIALS = require('../../utils/dbConnectionConstants');
 
@@ -17,20 +16,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.engine('html', engines.nunjucks);
 app.set('view engine', 'html');
 app.set('views', __dirname + '/views');
-
-/**
- * Display de form to save a new movie
- */
-app.get('/', function(req, res, next) {
-    res.render('index');
-});
-
-/**
- * Display de form to save a new movie
- */
-// app.get('/save_movie', function(req, res, next) {
-//     res.render('movieForm', { 'model' : {'title': 'write a movie', 'year': '1993', 'imdb': 'http://...'} });
-// });
 
 /**
  * Save a new movie
@@ -66,7 +51,6 @@ app.post('/movie', function(req, res, next) {
         
         res.status(200).send(MOVIE);
     }
-    // res.status(200).send({'status': 'OK'});
 });
 
 /**
@@ -81,7 +65,6 @@ app.get('/movie', function(req, res, next) {
 
         mongoDb.MongoClient.connect(DB_CREDENTIALS.URI, function(err, db) {
 
-            // assert.equal(err, null);c
             if(err) {
                 next(err);
                 return;
@@ -108,8 +91,6 @@ app.get('/movie', function(req, res, next) {
             db.close();
         });
     } else {
-
-        // TODO throw an error
-
+        next(new Error('No parameter.'));
     }
 });
