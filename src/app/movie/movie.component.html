@@ -1,26 +1,15 @@
-<mat-card>
-  <h1>Save a Movie</h1>
-  <mat-form-field>
-    <input matInput id="title" [(ngModel)]="movieToSave.title" placeholder="Title of the movie?">
-  </mat-form-field>
+<app-movie-form (afterMovieSaved)="displayMovieSaved($event)"></app-movie-form>
 
-  <mat-form-field>
-    <input matInput id="year" [(ngModel)]="movieToSave.year" placeholder="Released year?">
-  </mat-form-field>
+<br *ngIf="!!savedMovies">
 
-  <mat-form-field>
-    <input matInput id="imdb" [(ngModel)]="movieToSave.imdb" placeholder="Imdb link?">
-  </mat-form-field>
-  
-  <button mat-raised-button (click)="saveMovie()">Save movie</button>
-  <mat-spinner [style.display]="showSaveSpinner ? 'block' : 'none'"></mat-spinner>
-</mat-card>
-
-<br *ngIf="!!savedMovie">
-
-<mat-card *ngIf="!!savedMovie">
+<mat-card *ngIf="!!savedMovies">
   <h1>Movie Saved</h1>
-  <pre>{{ savedMovie | json }}</pre>
+  <div *ngFor="let savedMovie of savedMovies; first as isFirst">
+    <br *ngIf="!isFirst">
+    <mat-card>
+      <pre>{{ savedMovie | json }}</pre>
+    </mat-card>
+  </div>
 </mat-card>
 
 <br>
@@ -44,6 +33,7 @@
   </mat-form-field>
 
   <button mat-raised-button (click)="searchMovies()">Search movies</button>
+  <button mat-raised-button (click)="reinitSearch()">Reinit search</button>
   <mat-spinner [style.display]="showSearchSpinner ? 'block' : 'none'"></mat-spinner>
 </mat-card>
 
@@ -51,5 +41,13 @@
 
 <mat-card *ngIf="!!searchedMovies">
   <h1>Movies Searched</h1>
-  <pre>{{ searchedMovies | json }}</pre>
+  <div *ngFor="let movie of searchedMovies; index as index">
+    <mat-card>
+      <pre>{{ movie | json }}</pre>
+      <button mat-raised-button (click)="updateMovie(movie)">Update movie</button>
+      <button mat-raised-button (click)="deleteMovie(movie, index)">Delete movie</button>
+      <app-movie-form *ngIf="movie.showUpdateInputs" [(model)]="searchedMovies[index]" (afterMovieSaved)="displayMovieSaved($event)"></app-movie-form>
+    </mat-card>
+    <br />
+  </div>
 </mat-card>

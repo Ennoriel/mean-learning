@@ -8,10 +8,9 @@ import { MovieRepositoryService } from './shared/movie-repository.service';
 })
 export class MovieComponent implements OnInit {
 
-  movieToSave;
   movieToSearch;
 
-  savedMovie;
+  savedMovies;
   searchedMovies;
 
   showSaveSpinner;
@@ -22,19 +21,21 @@ export class MovieComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.movieToSave = {};
-    this.movieToSearch = {};
-
-    this.showSaveSpinner = false;
-    this.showSearchSpinner = false;
+    this.reinitSearch();
   }
 
-  saveMovie() {
-    this.showSaveSpinner = true;
-    this._movieRepositoryService.post(this.movieToSave).subscribe(res => {
-      this.savedMovie = res;
-      this.showSaveSpinner = false;
-    });
+  displayMovieSaved($event) {
+    if (this.savedMovies) {
+      this.savedMovies.push($event);
+    } else {
+      this.savedMovies = [$event];
+    }
+  }
+
+  reinitSearch() {
+    this.movieToSearch = {};
+    this.searchedMovies = null;
+    this.showSearchSpinner = false;
   }
 
   searchMovies() {
@@ -42,6 +43,18 @@ export class MovieComponent implements OnInit {
     this._movieRepositoryService.get(this.movieToSearch).subscribe(res => {
       this.searchedMovies = res;
       this.showSearchSpinner = false;
+    });
+  }
+
+  updateMovie(movie) {
+    movie.showUpdateInputs = true;
+  }
+
+  deleteMovie(movie, index) {
+    console.log(movie);
+    console.log(index);
+    this._movieRepositoryService.delete(movie._id).subscribe(_ => {
+      this.searchedMovies.splice(index, 1);
     });
   }
 }

@@ -11,10 +11,12 @@ import { AppComponent } from './app.component';
 import { AlphaVantageComponent } from './alpha-vantage/alpha-vantage.component';
 import { AlphaVantageFormComponent } from './alpha-vantage/alpha-vantage-form/alpha-vantage-form.component';
 import { MovieComponent } from './movie/movie.component';
+import { MovieFormComponent } from './movie/movie-form/movie-form.component';
 
 import { AlphaVantageApiService } from './alpha-vantage/shared/alpha-vantage-api.service';
 import { AlphaVantageRepositoryService } from './alpha-vantage/shared/alpha-vantage-repository.service';
 import { MovieRepositoryService } from './movie/shared/movie-repository.service';
+import { MovieTypesService } from './movie/shared/movie-types.service';
 
 const myRoots: Routes = [
   { path: '', redirectTo: '/alpha-vantage', pathMatch: 'full' },
@@ -27,7 +29,8 @@ const myRoots: Routes = [
     AppComponent,
     AlphaVantageComponent,
     AlphaVantageFormComponent,
-    MovieComponent
+    MovieComponent,
+    MovieFormComponent
 ],
   imports: [
     BrowserModule,
@@ -40,7 +43,8 @@ const myRoots: Routes = [
   providers: [
     AlphaVantageApiService,
     AlphaVantageRepositoryService,
-    MovieRepositoryService
+    MovieRepositoryService,
+    MovieTypesService
   ],
   bootstrap: [
     AppComponent
