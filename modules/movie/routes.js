@@ -2,6 +2,7 @@ const express = require('express');
 const engines = require('consolidate');
 const mongoDb = require('mongodb');
 const bodyParser = require('body-parser');
+const ObjectId = mongoDb.ObjectID;
 
 var DB_CREDENTIALS = require('../../utils/dbConnectionConstants');
 
@@ -54,6 +55,63 @@ app.post('/movie', function(req, res, next) {
 });
 
 /**
+ * Update a movie
+ */
+app.put('/movie/:movieId', function(req, res, next) {
+    console.log('Update the movie: ' + req.body.title);
+
+    const TITLE = req.body.title;
+    const YEAR = req.body.year;
+    const IMDB = req.body.imdb;
+    const _ID = req.params.movieId;
+
+    if (TITLE == '' || YEAR == '' || IMDB == '') {
+        next('Please insert correct data');
+        return;
+    } else {
+
+        const MOVIE = {
+            'title': TITLE,
+            'year': YEAR,
+            'imdb': IMDB,
+            toString: function() { return '[title: ' + this.title + ', year: ' + this.year + ', imdb: ' + this.imdb + ']'; }
+        }
+        
+        mongoDb.MongoClient.connect(DB_CREDENTIALS.URI, (err, db) => {
+        
+            if (err) throw err
+        
+            console.log('updating movie: ' + MOVIE.toString());
+            db.db(DB_CREDENTIALS.DBNAME).collection('movie').update({'_id': ObjectId(_ID)}, MOVIE);
+    
+            db.close();
+        });
+        
+        res.status(200).send(MOVIE);
+    }
+});
+
+/**
+ * Delete a movie
+ */
+app.delete('/movie/:movieId', function(req, res, next) {
+    console.log('Delete the movie: ' + req.params.movieId);
+
+    const _ID = req.params.movieId;
+    
+    mongoDb.MongoClient.connect(DB_CREDENTIALS.URI, (err, db) => {
+    
+        if (err) throw err
+    
+        db.db(DB_CREDENTIALS.DBNAME).collection('movie').deleteOne({'_id': ObjectId(_ID)});
+
+        db.close();
+    });
+    
+    res.status(200).send({'status': 'OK'});
+});
+
+/**
  * Method to research and display movies
  */
 app.get('/movie', function(req, res, next) {
@@ -61,7 +119,7 @@ app.get('/movie', function(req, res, next) {
     var query = movieSearchService.getQueryWithFormParameters(req.query);
     var resultats = '';
 
-    if(query.year || query.title || query.imdb) {
+    if(true || query.year || query.title || query.imdb) {
 
         mongoDb.MongoClient.connect(DB_CREDENTIALS.URI, function(err, db) {
 
@@ -72,12 +130,12 @@ app.get('/movie', function(req, res, next) {
 
             var options = {
                 'projection' : {
-                    '_id': 0,
+                    '_id': 1,
                     'title': 1,
                     'year': 1,
                     'imdb': 1
                 },
-                'limit': 5
+                'limit': 50
             };
 
             db.db(DB_CREDENTIALS.DBNAME).collection('movie').find(query, options).toArray((err, movies) => {
