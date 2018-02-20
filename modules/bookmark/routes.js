@@ -19,6 +19,43 @@ app.set('view engine', 'html');
 app.set('views', __dirname + '/views');
 
 /**
+ * Search bookmarks
+ */
+app.get('/bookmark', function(req, res, next) {
+
+    var query = bookmarkSearchService.getQueryWithFormParameters(req.query);
+
+    mongoDb.MongoClient.connect(DB_CREDENTIALS.URI, function(err, db) {
+
+        if(err) {
+            next(err.message);
+            return;
+        }
+
+        var options = {
+            'projection' : {
+                '_id': 1,
+                'name': 1,
+                'npm': 1,
+                'github': 1,
+                'web': 1
+            },
+            'limit': 20
+        };
+
+        db.db(DB_CREDENTIALS.DBNAME).collection('bookmark').find(query, options).toArray((err, bookmarks) => {
+
+            res.status(200).send(bookmarks);
+        });
+
+        // db.db(dbName).collection(collName).find(query, options).toArray((err, docs) => {docs.forEach(doc => ...)});
+        // db.db(dbName).collection(collName).find(query, options).forEach(doc => ..., err => ...);
+
+        db.close();
+    });
+});
+
+/**
  * Save a new bookmark
  */
 app.post('/bookmark', function(req, res, next) {
@@ -48,6 +85,8 @@ app.put('/bookmark/:bookmarkId', function(req, res, next) {
     console.log('update a bookmark.');
 
     const BOOKMARK = req.body;
+    delete BOOKMARK._id;
+    
     const _ID = req.params.bookmarkId;
 
     if (!bookmarkSearchService.isBookmarkCorrect(BOOKMARK, next)) return;
@@ -83,41 +122,4 @@ app.delete('/bookmark/:bookmarkId', function(req, res, next) {
     });
     
     res.status(200).send({'status': 'OK'});
-});
-
-/**
- * Method to research and display bookmarks
- */
-app.get('/bookmark', function(req, res, next) {
-
-    var query = bookmarkSearchService.getQueryWithFormParameters(req.query);
-
-    mongoDb.MongoClient.connect(DB_CREDENTIALS.URI, function(err, db) {
-
-        if(err) {
-            next(err.message);
-            return;
-        }
-
-        var options = {
-            'projection' : {
-                '_id': 1,
-                'name': 1,
-                'npm': 1,
-                'github': 1,
-                'web': 1
-            },
-            'limit': 20
-        };
-
-        db.db(DB_CREDENTIALS.DBNAME).collection('bookmark').find(query, options).toArray((err, bookmarks) => {
-
-            res.status(200).send(bookmarks);
-        });
-
-        // db.db(dbName).collection(collName).find(query, options).toArray((err, docs) => {docs.forEach(doc => ...)});
-        // db.db(dbName).collection(collName).find(query, options).forEach(doc => ..., err => ...);
-
-        db.close();
-    });
 });
