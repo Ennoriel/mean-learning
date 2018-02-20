@@ -9,7 +9,7 @@ const commandLineUtils = require('./utils/commandLineUtils.js');
 /**
  * Routes
  */
-const movieSearchRoute = require('./modules/movie');
+const bookmarkSearchRoute = require('./modules/bookmark');
 const AlphaVantageRoute = require('./modules/alphaVantage');
 const errorHandlerRoute = require('./modules/error');
 
@@ -29,7 +29,7 @@ app.use(function(req, res, next) {
     // }
 });
 
-app.use(movieSearchRoute);
+app.use(bookmarkSearchRoute);
 app.use(AlphaVantageRoute);
 app.use(errorHandlerRoute);
 
