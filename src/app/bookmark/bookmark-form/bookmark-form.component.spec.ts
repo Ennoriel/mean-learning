@@ -3,21 +3,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { MovieComponent } from './movie.component';
+import { BookmarkFormComponent } from './bookmark-form.component';
 
-describe('MovieComponent', () => {
-  let component: MovieComponent;
-  let fixture: ComponentFixture<MovieComponent>;
+describe('BookmarkFormComponent', () => {
+  let component: BookmarkFormComponent;
+  let fixture: ComponentFixture<BookmarkFormComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MovieComponent ]
+      declarations: [ BookmarkFormComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MovieComponent);
+    fixture = TestBed.createComponent(BookmarkFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

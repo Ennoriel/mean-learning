@@ -1,19 +1,19 @@
 import { Injectable } from '@angular/core';
 
 @Injectable()
-export class MovieTypesService {
+export class BookmarkTypesService {
 
     constructor() { }
 
 }
 
-export class MovieWOConstructor {
+export class BookmarkWOConstructor {
     public title: string;
     public year?: number;
     public imdb?: string;
 }
 
-export class MovieWConstructor {
+export class BookmarkWConstructor {
     constructor(
         title: string,
         year?: number,

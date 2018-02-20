@@ -1,0 +1,54 @@
+<mat-card>
+  <h1>Search a Bookmark</h1>
+  <mat-form-field>
+    <input matInput id="name" [(ngModel)]="bookmarkToSearch.name" placeholder="Name of the bookmark?">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput id="npm" [(ngModel)]="bookmarkToSearch.npm" placeholder="Npm link?">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput id="github" [(ngModel)]="bookmarkToSearch.github" placeholder="Github link?">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput id="web" [(ngModel)]="bookmarkToSearch.web" placeholder="Official website link?">
+  </mat-form-field>
+
+  <button mat-raised-button (click)="searchBookmarks()">Search bookmarks</button>
+  <button mat-raised-button (click)="reinitSearch()">Reinit search</button>
+  <mat-spinner [style.display]="showSearchSpinner ? 'block' : 'none'"></mat-spinner>
+</mat-card>
+
+<br *ngIf="!!searchedBookmarks">
+
+<mat-card *ngIf="!!searchedBookmarks">
+  <h1>Bookmarks Searched</h1>
+  <div *ngFor="let bookmark of searchedBookmarks; index as index">
+    <mat-card>
+      <pre>{{ bookmark | json }}</pre>
+      <button mat-raised-button (click)="updateBookmark(bookmark)">Update bookmark</button>
+      <button mat-raised-button (click)="deleteBookmark(bookmark, index)">Delete bookmark</button>
+      <app-bookmark-form *ngIf="bookmark.showUpdateInputs" [(model)]="searchedBookmarks[index]" (afterBookmarkSaved)="displayBookmarkSaved($event)"></app-bookmark-form>
+    </mat-card>
+    <br />
+  </div>
+</mat-card>
+
+<br>
+
+<!-- SAVE A BOOKMARK -->
+<app-bookmark-form (afterBookmarkSaved)="displayBookmarkSaved($event)"></app-bookmark-form>
+
+<br *ngIf="!!savedBookmarks">
+
+<mat-card *ngIf="!!savedBookmarks">
+  <h1>Bookmark Saved</h1>
+  <div *ngFor="let savedBookmark of savedBookmarks; first as isFirst">
+    <br *ngIf="!isFirst">
+    <mat-card>
+      <pre>{{ savedBookmark | json }}</pre>
+    </mat-card>
+  </div>
+</mat-card>

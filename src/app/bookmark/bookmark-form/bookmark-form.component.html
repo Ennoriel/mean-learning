@@ -1,0 +1,22 @@
+<mat-card>
+  <h1>Save a new bookmark</h1>
+  <mat-form-field>
+    <input matInput id="name" [(ngModel)]="model.name" placeholder="Name of the bookmark?">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput id="npm" [(ngModel)]="model.npm" placeholder="Npm link?">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput id="github" [(ngModel)]="model.github" placeholder="Github link?">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput id="web" [(ngModel)]="model.web" placeholder="Official website link?">
+  </mat-form-field>
+  
+  <button mat-raised-button (click)="saveBookmark()">Save bookmark</button>
+  <button mat-raised-button (click)="reinitSave()">Reinit inputs</button>
+  <mat-spinner [style.display]="showSaveSpinner ? 'block' : 'none'"></mat-spinner>
+</mat-card>
