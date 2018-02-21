@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { BookmarkRepositoryService } from './shared/bookmark-repository.service';
 
+/**
+ * Component used as a CRUD example with bookmarks
+ */
 @Component({
   selector: 'app-bookmark',
   templateUrl: './bookmark.component.html',
@@ -21,9 +24,13 @@ export class BookmarkComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.reinitSearch();
+    this.initSearch();
   }
 
+  /**
+   * When a bookmark si saved, display it on the specific secition
+   * @param $event the bookmark newly saved
+   */
   displayBookmarkSaved($event) {
     if (this.savedBookmarks) {
       this.savedBookmarks.push($event);
@@ -32,12 +39,18 @@ export class BookmarkComponent implements OnInit {
     }
   }
 
-  reinitSearch() {
+  /**
+   * Initialize and reinitialize the search objects to be empty
+   */
+  initSearch() {
     this.bookmarkToSearch = {};
     this.searchedBookmarks = null;
     this.showSearchSpinner = false;
   }
 
+  /**
+   * Search bookmarks into the DB
+   */
   searchBookmarks() {
     this.showSearchSpinner = true;
     this._bookmarkRepositoryService.get(this.bookmarkToSearch).subscribe(res => {
@@ -46,10 +59,19 @@ export class BookmarkComponent implements OnInit {
     });
   }
 
+  /**
+   * Display the update field
+   * @param bookmark the bookmark to be updated
+   */
   updateBookmark(bookmark) {
     bookmark.showUpdateInputs = true;
   }
 
+  /**
+   * Delete a bookmark
+   * @param bookmark the bookmark to be deleted
+   * @param index the index of the bookmark in the array displayed
+   */
   deleteBookmark(bookmark, index) {
     console.log(bookmark);
     console.log(index);

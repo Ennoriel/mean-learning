@@ -16,6 +16,10 @@ const importsExports = [
     MatCardModule
 ];
 
+/**
+ * Module used to both import and export Material modules
+ * not to overload too much the app module
+ */
 @NgModule({
   imports: importsExports,
   exports: importsExports,
