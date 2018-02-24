@@ -96,12 +96,18 @@ app.put('/bookmark/:bookmarkId', function(req, res, next) {
         if (err) throw err
     
         console.log('updating bookmark: ' + BOOKMARK.name);
-        db.db(DB_CREDENTIALS.DBNAME).collection('bookmark').update({'_id': ObjectId(_ID)}, BOOKMARK);
+        db.db(DB_CREDENTIALS.DBNAME)
+          .collection('bookmark')
+          .update({'_id': ObjectId(_ID)}, BOOKMARK)
+          .then(_ => {
+    
+            BOOKMARK._id = _ID;
+            res.status(200).send(BOOKMARK);
+
+        });
 
         db.close();
     });
-    
-    res.status(200).send(BOOKMARK);
 });
 
 /**
@@ -123,3 +129,10 @@ app.delete('/bookmark/:bookmarkId', function(req, res, next) {
     
     res.status(200).send({'status': 'OK'});
 });
+
+app.use(
+    function errorHandler(err, req, res, next) {
+        console.error('error: ' + err);
+        res.status(400).send({ 'message': err });
+    }
+);

@@ -1,7 +1,11 @@
 const express = require('express');
 const engines = require('consolidate');
+const bodyParser = require('body-parser');
 
 const app = module.exports = express();
+
+app.use(bodyParser.json({"strict": true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // HTML conf
 app.engine('html', engines.nunjucks);
@@ -10,7 +14,8 @@ app.set('views', __dirname);
 
 app.use(
     function errorHandler(err, req, res, next) {
-        console.log("Error occured: " + err);
-        res.status(400).send({ error: err });
+        console.error('error');
+        res.status(500);
+        res.send({ 'error': err });
     }
 );

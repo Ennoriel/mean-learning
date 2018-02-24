@@ -31,7 +31,7 @@ app.use(function(req, res, next) {
 
 app.use(bookmarkSearchRoute);
 app.use(AlphaVantageRoute);
-app.use(errorHandlerRoute);
+// app.use(errorHandlerRoute);
 
 /**
  * Lancement du serveur
@@ -39,6 +39,7 @@ app.use(errorHandlerRoute);
 if(commandLineUtils.getCommandLineOptions().launchServer === 'Y') {
     var server = app.listen(3000, function() {
         var port = server.address().port;
+        console.log(new Date());
         console.log('Express server listening on port %s.', port);
     });
 }
