@@ -28,7 +28,7 @@ export class BookmarkComponent implements OnInit {
   }
 
   /**
-   * When a bookmark si saved, display it on the specific secition
+   * When a bookmark is saved, display it on the specific secition
    * @param $event the bookmark newly saved
    */
   displayBookmarkSaved($event) {
@@ -37,6 +37,17 @@ export class BookmarkComponent implements OnInit {
     } else {
       this.savedBookmarks = [$event];
     }
+  }
+
+  /**
+   * When a bookmark is updated, update it on the searched list
+   * @param $event the bookmark newly saved
+   */
+  displayBookmarkUpdated($event) {
+    this.searchedBookmarks.forEach(bookmark => {
+      if (bookmark._id === $event._id) {
+        Object.assign(bookmark, $event);
+      }});
   }
 
   /**

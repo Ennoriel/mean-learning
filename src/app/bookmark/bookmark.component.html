@@ -30,7 +30,10 @@
       <pre>{{ bookmark | json }}</pre>
       <button mat-raised-button (click)="updateBookmark(bookmark)">Update bookmark</button>
       <button mat-raised-button (click)="deleteBookmark(bookmark, index)">Delete bookmark</button>
-      <app-bookmark-form *ngIf="bookmark.showUpdateInputs" [(model)]="searchedBookmarks[index]" (afterBookmarkSaved)="displayBookmarkSaved($event)"></app-bookmark-form>
+      <app-bookmark-form *ngIf="bookmark.showUpdateInputs"
+                         [(model)]="searchedBookmarks[index]"
+                         (afterBookmarkSaved)="displayBookmarkUpdated($event)">
+      </app-bookmark-form>
     </mat-card>
     <br />
   </div>
