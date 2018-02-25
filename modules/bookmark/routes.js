@@ -103,7 +103,6 @@ app.put('/bookmark/:bookmarkId', function(req, res, next) {
     
             BOOKMARK._id = _ID;
             res.status(200).send(BOOKMARK);
-
         });
 
         db.close();
@@ -117,17 +116,22 @@ app.delete('/bookmark/:bookmarkId', function(req, res, next) {
     console.log('Delete the bookmark: ' + req.params.bookmarkId);
 
     const _ID = req.params.bookmarkId;
+    console.log(_ID);
     
     mongoDb.MongoClient.connect(DB_CREDENTIALS.URI, (err, db) => {
     
         if (err) throw err
     
-        db.db(DB_CREDENTIALS.DBNAME).collection('bookmark').deleteOne({'_id': ObjectId(_ID)});
+        db.db(DB_CREDENTIALS.DBNAME)
+          .collection('bookmark')
+          .deleteOne({'_id': ObjectId(_ID)})
+          .then(_ => {
+    
+            res.status(200).send({'status': 'OK'});
+        });
 
         db.close();
     });
-    
-    res.status(200).send({'status': 'OK'});
 });
 
 app.use(
