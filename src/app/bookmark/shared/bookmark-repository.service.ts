@@ -6,6 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
+import { Bookmark, PersistedBookmark } from './bookmark-types.service';
 
 @Injectable()
 export class BookmarkRepositoryService {
@@ -18,15 +19,15 @@ export class BookmarkRepositoryService {
      * Search bookmarks
      * @param body criterias
      */
-    get(body: any): any {
-        return this._http.get(this._getQueryString(this.URL, body));
+    get(body: PersistedBookmark): Observable<Array<PersistedBookmark>> {
+        return this._http.get<Array<PersistedBookmark>>(this._getQueryString(this.URL, body));
     }
 
     /**
      * Save a bookmark
      * @param bookmark bookmark
      */
-    post(body): any {
+    post(body): Observable<PersistedBookmark> {
         return this._http
             .post(this.URL, body)
             .map(res => res)
@@ -38,7 +39,7 @@ export class BookmarkRepositoryService {
      * @param id _id of the bookmark
      * @param body bookmark to save
      */
-    put(id: String, body: any): any {
+    put(id: String, body: any): Observable<PersistedBookmark> {
         return this._http
             .put(this.URL + '/' + body._id, body)
             .pipe(catchError(this._handleError));

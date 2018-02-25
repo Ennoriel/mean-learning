@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BookmarkRepositoryService } from './shared/bookmark-repository.service';
+import { PersistedBookmark, Bookmark } from './shared/bookmark-types.service';
 
 /**
  * Component used as a CRUD example with bookmarks
@@ -11,13 +12,13 @@ import { BookmarkRepositoryService } from './shared/bookmark-repository.service'
 })
 export class BookmarkComponent implements OnInit {
 
-  bookmarkToSearch;
+  bookmarkToSearch: PersistedBookmark;
 
-  savedBookmarks;
-  searchedBookmarks;
+  savedBookmarks: Array<Bookmark>;
+  searchedBookmarks: Array<Bookmark>;
 
-  showSaveSpinner;
-  showSearchSpinner;
+  showSaveSpinner: Boolean;
+  showSearchSpinner: Boolean;
 
   constructor(
     private _bookmarkRepositoryService: BookmarkRepositoryService
@@ -31,41 +32,41 @@ export class BookmarkComponent implements OnInit {
    * When a bookmark is saved, display it on the specific secition
    * @param $event the bookmark newly saved
    */
-  displayBookmarkSaved($event) {
-    if (this.savedBookmarks) {
-      this.savedBookmarks.push($event);
-    } else {
-      this.savedBookmarks = [$event];
+  displayBookmarkSaved($event: PersistedBookmark): void {
+    if (!this.savedBookmarks) {
+      this.savedBookmarks = [];
     }
+    this.savedBookmarks.push(new Bookmark($event));
   }
 
   /**
    * When a bookmark is updated, update it on the searched list
    * @param $event the bookmark newly saved
    */
-  displayBookmarkUpdated($event) {
+  displayBookmarkUpdated($event: PersistedBookmark): void {
     this.searchedBookmarks.forEach(bookmark => {
-      if (bookmark._id === $event._id) {
-        Object.assign(bookmark, $event);
+      if (bookmark.persisted._id === $event._id) {
+        Object.assign(bookmark.persisted, $event);
+        delete bookmark.showUpdateInputs;
       }});
   }
 
   /**
    * Initialize and reinitialize the search objects to be empty
    */
-  initSearch() {
-    this.bookmarkToSearch = {};
-    this.searchedBookmarks = null;
+  initSearch(): void {
+    this.bookmarkToSearch = new PersistedBookmark();
+    console.log(this.searchedBookmarks);
     this.showSearchSpinner = false;
   }
 
   /**
    * Search bookmarks into the DB
    */
-  searchBookmarks() {
+  searchBookmarks(): void {
     this.showSearchSpinner = true;
-    this._bookmarkRepositoryService.get(this.bookmarkToSearch).subscribe(res => {
-      this.searchedBookmarks = res;
+    this._bookmarkRepositoryService.get(this.bookmarkToSearch).subscribe(resultList => {
+      this.searchedBookmarks = resultList.map(result => new Bookmark(result));
       this.showSearchSpinner = false;
     });
   }
@@ -74,7 +75,7 @@ export class BookmarkComponent implements OnInit {
    * Display the update field
    * @param bookmark the bookmark to be updated
    */
-  updateBookmark(bookmark) {
+  showUpdateForm(bookmark: Bookmark): void {
     bookmark.showUpdateInputs = true;
   }
 
@@ -83,11 +84,13 @@ export class BookmarkComponent implements OnInit {
    * @param bookmark the bookmark to be deleted
    * @param index the index of the bookmark in the array displayed
    */
-  deleteBookmark(bookmark, index) {
-    console.log(bookmark);
-    console.log(index);
-    this._bookmarkRepositoryService.delete(bookmark._id).subscribe(_ => {
+  deleteBookmark(bookmark: Bookmark, index: number): void {
+    console.log(bookmark.persisted._id);
+    this._bookmarkRepositoryService.delete(bookmark.persisted._id).subscribe(_ => {
       this.searchedBookmarks.splice(index, 1);
+    },
+    error => {
+      alert(error);
     });
   }
 }

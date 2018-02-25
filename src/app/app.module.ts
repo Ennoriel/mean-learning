@@ -16,7 +16,7 @@ import { BookmarkFormComponent } from './bookmark/bookmark-form/bookmark-form.co
 import { AlphaVantageApiService } from './alpha-vantage/shared/alpha-vantage-api.service';
 import { AlphaVantageRepositoryService } from './alpha-vantage/shared/alpha-vantage-repository.service';
 import { BookmarkRepositoryService } from './bookmark/shared/bookmark-repository.service';
-import { BookmarkTypesService } from './bookmark/shared/bookmark-types.service';
+// import { BookmarkTypesService } from './bookmark/shared/bookmark-types.service';
 
 const myRoots: Routes = [
   { path: '', redirectTo: '/alpha-vantage', pathMatch: 'full' },
@@ -43,8 +43,8 @@ const myRoots: Routes = [
   providers: [
     AlphaVantageApiService,
     AlphaVantageRepositoryService,
-    BookmarkRepositoryService,
-    BookmarkTypesService
+    BookmarkRepositoryService
+    // BookmarkTypesService
   ],
   bootstrap: [
     AppComponent

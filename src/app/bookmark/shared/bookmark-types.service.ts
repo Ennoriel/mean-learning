@@ -1,22 +1,34 @@
-import { Injectable } from '@angular/core';
-
-@Injectable()
-export class BookmarkTypesService {
-
-    constructor() { }
-
+export interface PersistedBookmark {
+    name?: String;
+    imdb?: String;
+    npm?: String;
+    web?: String;
+    _id: String;
 }
 
-export class BookmarkWOConstructor {
-    public title: string;
-    public year?: number;
-    public imdb?: string;
-}
+export class PersistedBookmark implements PersistedBookmark {
 
-export class BookmarkWConstructor {
     constructor(
-        title: string,
-        year?: number,
-        imdb?: string
-    ) {}
+        name?: String,
+        imdb?: String,
+        npm?: String,
+        web?: String,
+        _id?: String
+    ) {
+        if (name) {this.name = name; }
+        if (imdb) {this.imdb = imdb; }
+        if (npm) {this.npm = npm; }
+        if (web) {this.web = web; }
+        if (_id) {this._id = _id; }
+    }
+
+}
+
+export class Bookmark {
+    persisted: PersistedBookmark;
+    showUpdateInputs: Boolean;
+
+    constructor (bookmark?: PersistedBookmark) {
+        this.persisted = bookmark;
+    }
 }

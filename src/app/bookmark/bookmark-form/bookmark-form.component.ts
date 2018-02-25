@@ -7,6 +7,7 @@ import {
 import {  } from 'protractor';
 import { BookmarkRepositoryService } from '../shared/bookmark-repository.service';
 import { Observable } from 'rxjs/Observable';
+import { PersistedBookmark } from '../shared/bookmark-types.service';
 
 @Component({
   selector: 'app-bookmark-form',
@@ -15,12 +16,12 @@ import { Observable } from 'rxjs/Observable';
 })
 export class BookmarkFormComponent implements OnInit {
 
-  @Input('model') model: any;
-  @Output() afterBookmarkSaved = new EventEmitter();
+  @Input('model') model: PersistedBookmark;
+  @Output() afterBookmarkSaved = new EventEmitter<PersistedBookmark>();
 
-  showSaveSpinner;
+  showSaveSpinner: boolean;
   isFormCreate: boolean;
-  title;
+  title: string;
 
   constructor(
     private _bookmarkRepositoryService: BookmarkRepositoryService
@@ -32,16 +33,16 @@ export class BookmarkFormComponent implements OnInit {
     this.title = this.isFormCreate ? 'Save a new bookmark' : 'Update the bookmark';
   }
 
-  initSave() {
-    this.model = this.model ? Object.assign({}, this.model) : {};
+  initSave(): void {
+    this.model = this.model ? Object.assign({}, this.model) : new PersistedBookmark();
     this.showSaveSpinner = false;
   }
 
-  reinitSave() {
-    this.model = {};
+  reinitSave(): void {
+    this.model = new PersistedBookmark();
   }
 
-  saveBookmark() {
+  saveBookmark(): void {
     this.showSaveSpinner = true;
 
     if (this.model._id) {
