@@ -5,7 +5,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { AlphaVantageComponent } from './alpha-vantage/alpha-vantage.component';
@@ -38,7 +38,8 @@ const myRoots: Routes = [
     MaterialModule,
     BrowserAnimationsModule,
     FormsModule,
-    RouterModule.forRoot(myRoots)
+    RouterModule.forRoot(myRoots),
+    ReactiveFormsModule
   ],
   providers: [
     AlphaVantageApiService,

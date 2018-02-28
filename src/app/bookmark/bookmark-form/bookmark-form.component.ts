@@ -8,6 +8,7 @@ import {  } from 'protractor';
 import { BookmarkRepositoryService } from '../shared/bookmark-repository.service';
 import { Observable } from 'rxjs/Observable';
 import { PersistedBookmark, Url } from '../shared/bookmark-types.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-bookmark-form',
@@ -25,11 +26,23 @@ export class BookmarkFormComponent implements OnInit {
 
   urlList: Array<Url>;
 
+  firstFormGroup: FormGroup;
+  secondFormGroup: FormGroup;
+
   constructor(
-    private _bookmarkRepositoryService: BookmarkRepositoryService
+    private _bookmarkRepositoryService: BookmarkRepositoryService,
+    private _formBuilder: FormBuilder
   ) { }
 
   ngOnInit() {
+    this.firstFormGroup = this._formBuilder.group({
+      name: ['', Validators.required]
+    });
+    this.secondFormGroup = this._formBuilder.group({
+      npm: ['', Validators.required],
+      github: ['', Validators.required]
+    });
+
     this.urlList = [];
     this.urlList.push({name: 'npm'});
     this.urlList.push({name: 'github'});

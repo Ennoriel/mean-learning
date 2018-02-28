@@ -6,7 +6,8 @@ import {
     MatInputModule,
     MatProgressSpinnerModule,
     MatCardModule,
-    MatTabsModule
+    MatTabsModule,
+    MatStepperModule
 } from '@angular/material';
 
 const importsExports = [
@@ -15,7 +16,8 @@ const importsExports = [
     MatInputModule,
     MatProgressSpinnerModule,
     MatCardModule,
-    MatTabsModule
+    MatTabsModule,
+    MatStepperModule
 ];
 
 /**

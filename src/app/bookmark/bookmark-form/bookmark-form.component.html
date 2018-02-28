@@ -1,24 +1,40 @@
+<h1>{{ title }}</h1>
 <mat-card>
-  <h1>{{ title }}</h1>
-  <mat-form-field>
-    <input matInput id="name" [(ngModel)]="model.name" placeholder="Name of the bookmark?">
-  </mat-form-field>
-
-  <!-- <div> -->
-    <mat-form-field *ngFor="let url of urlList">
-      <input matInput id="{{ url.name }}" [(ngModel)]="url.link" placeholder="{{ url.name }} link?">
-  </mat-form-field>
-  <!-- </div> -->
-
-  <!-- <mat-form-field>
-    <input matInput id="github" [(ngModel)]="url[1].link" placeholder="Github link?">
-  </mat-form-field> -->
-
-  <mat-form-field>
-    <input matInput id="web" [(ngModel)]="model.web" placeholder="Official website link?">
-  </mat-form-field>
-  
-  <button mat-raised-button (click)="saveBookmark()">Save bookmark</button>
-  <button mat-raised-button (click)="reinitSave()">Reinit inputs</button>
-  <mat-spinner [style.display]="showSaveSpinner ? 'block' : 'none'"></mat-spinner>
+  <mat-horizontal-stepper [linear]="true" #stepper="matHorizontalStepper">
+    <mat-step [stepControl]="firstFormGroup">
+      <form [formGroup]="firstFormGroup">
+        <ng-template matStepLabel>Fill out your name</ng-template>
+        
+        <mat-form-field>
+          <input matInput id="name" formControlName="name" [(ngModel)]="model.name" placeholder="Name of the bookmark?">
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup">
+      <form [formGroup]="secondFormGroup">
+        <ng-template matStepLabel>Fill out your address</ng-template>
+        
+        <mat-form-field *ngFor="let url of urlList">
+          <input matInput id="{{ url.name }}" formControlName="{{ url.name }}" [(ngModel)]="url.link" placeholder="{{ url.name }} link?">
+        </mat-form-field>
+        
+        <div>
+          <button mat-button matStepperNext (click)="saveBookmark()">Save bookmark</button>
+          <button mat-button (click)="reinitSave()">Reinit inputs</button>
+          <mat-spinner [style.display]="showSaveSpinner ? 'block' : 'none'"></mat-spinner>
+        </div>
+        
+      </form>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Done</ng-template>
+      You are now done.
+      <div>
+        <button mat-button (click)="stepper.reset()">Reset</button>
+      </div>
+    </mat-step>
+  </mat-horizontal-stepper>
 </mat-card>
