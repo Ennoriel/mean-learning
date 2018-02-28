@@ -4,13 +4,15 @@
     <input matInput id="name" [(ngModel)]="model.name" placeholder="Name of the bookmark?">
   </mat-form-field>
 
-  <mat-form-field>
-    <input matInput id="npm" [(ngModel)]="model.npm" placeholder="Npm link?">
+  <!-- <div> -->
+    <mat-form-field *ngFor="let url of urlList">
+      <input matInput id="{{ url.name }}" [(ngModel)]="url.link" placeholder="{{ url.name }} link?">
   </mat-form-field>
+  <!-- </div> -->
 
-  <mat-form-field>
-    <input matInput id="github" [(ngModel)]="model.github" placeholder="Github link?">
-  </mat-form-field>
+  <!-- <mat-form-field>
+    <input matInput id="github" [(ngModel)]="url[1].link" placeholder="Github link?">
+  </mat-form-field> -->
 
   <mat-form-field>
     <input matInput id="web" [(ngModel)]="model.web" placeholder="Official website link?">

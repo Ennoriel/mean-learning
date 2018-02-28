@@ -5,7 +5,8 @@ import {
     MatToolbarModule,
     MatInputModule,
     MatProgressSpinnerModule,
-    MatCardModule
+    MatCardModule,
+    MatTabsModule
 } from '@angular/material';
 
 const importsExports = [
@@ -13,7 +14,8 @@ const importsExports = [
     MatToolbarModule,
     MatInputModule,
     MatProgressSpinnerModule,
-    MatCardModule
+    MatCardModule,
+    MatTabsModule
 ];
 
 /**

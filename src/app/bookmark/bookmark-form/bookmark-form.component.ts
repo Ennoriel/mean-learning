@@ -7,7 +7,7 @@ import {
 import {  } from 'protractor';
 import { BookmarkRepositoryService } from '../shared/bookmark-repository.service';
 import { Observable } from 'rxjs/Observable';
-import { PersistedBookmark } from '../shared/bookmark-types.service';
+import { PersistedBookmark, Url } from '../shared/bookmark-types.service';
 
 @Component({
   selector: 'app-bookmark-form',
@@ -23,11 +23,16 @@ export class BookmarkFormComponent implements OnInit {
   isFormCreate: boolean;
   title: string;
 
+  urlList: Array<Url>;
+
   constructor(
     private _bookmarkRepositoryService: BookmarkRepositoryService
   ) { }
 
   ngOnInit() {
+    this.urlList = [];
+    this.urlList.push({name: 'npm'});
+    this.urlList.push({name: 'github'});
     this.initSave();
     this.isFormCreate = !this.model._id;
     this.title = this.isFormCreate ? 'Save a new bookmark' : 'Update the bookmark';
@@ -56,7 +61,7 @@ export class BookmarkFormComponent implements OnInit {
           alert(error);
         });
     } else {
-      this._bookmarkRepositoryService.post(this.model).subscribe(savedBookmark => {
+      this._bookmarkRepositoryService.post(Object.assign(this.model, {url: this.urlList})).subscribe(savedBookmark => {
         this.reinitSave();
         this.afterBookmarkSaved.emit(savedBookmark);
         this.showSaveSpinner = false;

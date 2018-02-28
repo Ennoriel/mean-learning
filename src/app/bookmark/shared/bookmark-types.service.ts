@@ -1,7 +1,12 @@
+export interface Url {
+    name?: String;
+    link?: String;
+}
+
 export interface PersistedBookmark {
     name?: String;
-    imdb?: String;
-    npm?: String;
+    github?: String;
+    url?: Array<Url>;
     web?: String;
     _id: String;
 }
@@ -9,19 +14,9 @@ export interface PersistedBookmark {
 export class PersistedBookmark implements PersistedBookmark {
 
     constructor(
-        name?: String,
-        imdb?: String,
-        npm?: String,
-        web?: String,
-        _id?: String
     ) {
-        if (name) {this.name = name; }
-        if (imdb) {this.imdb = imdb; }
-        if (npm) {this.npm = npm; }
-        if (web) {this.web = web; }
-        if (_id) {this._id = _id; }
+        this.url = new Array();
     }
-
 }
 
 export class Bookmark {
