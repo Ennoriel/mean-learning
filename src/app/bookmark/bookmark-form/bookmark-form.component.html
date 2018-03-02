@@ -3,7 +3,7 @@
   <mat-horizontal-stepper [linear]="true" #stepper="matHorizontalStepper">
     <mat-step [stepControl]="firstFormGroup">
       <form [formGroup]="firstFormGroup">
-        <ng-template matStepLabel>Fill out your name</ng-template>
+        <ng-template matStepLabel>Fill out bookmark name</ng-template>
         
         <mat-form-field>
           <input matInput id="name" formControlName="name" [(ngModel)]="model.name" placeholder="Name of the bookmark?">
@@ -15,15 +15,22 @@
     </mat-step>
     <mat-step [stepControl]="secondFormGroup">
       <form [formGroup]="secondFormGroup">
-        <ng-template matStepLabel>Fill out your address</ng-template>
+        <ng-template matStepLabel>Fill out bookmark details</ng-template>
         
-        <mat-form-field *ngFor="let url of urlList">
-          <input matInput id="{{ url.name }}" formControlName="{{ url.name }}" [(ngModel)]="url.link" placeholder="{{ url.name }} link?">
-        </mat-form-field>
-        
+        <div *ngFor="let resource of model.resources; index as index">
+          <mat-form-field>
+            <input matInput formControlName="resourceName_{{ index }}" formControlName="{{ resource.name }}" [(ngModel)]="resource.name" placeholder="Resource name?">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput formControlName="resourceLink_{{ index }}" formControlName="{{ resource.link }}" [(ngModel)]="resource.link" placeholder="Resource link?">
+          </mat-form-field>
+          <button mat-button (click)="removeResource(index)">Remove the resource</button>
+        </div>
+
         <div>
+          <button mat-button (click)="addResource()">Add another resource</button>
+          <button mat-button (click)="stepper.reset()">Go back to the beginning</button>
           <button mat-button matStepperNext (click)="saveBookmark()">Save bookmark</button>
-          <button mat-button (click)="reinitSave()">Reinit inputs</button>
           <mat-spinner [style.display]="showSaveSpinner ? 'block' : 'none'"></mat-spinner>
         </div>
         
@@ -33,7 +40,7 @@
       <ng-template matStepLabel>Done</ng-template>
       You are now done.
       <div>
-        <button mat-button (click)="stepper.reset()">Reset</button>
+        <button mat-button (click)="stepper.reset()">Save a new movie</button>
       </div>
     </mat-step>
   </mat-horizontal-stepper>

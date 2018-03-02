@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BookmarkRepositoryService } from './shared/bookmark-repository.service';
-import { PersistedBookmark, Bookmark } from './shared/bookmark-types.service';
+import { PersistedBookmark, Bookmark, BookmarkSO } from './shared/bookmark-types.service';
 
 /**
  * Component used as a CRUD example with bookmarks
@@ -12,7 +12,7 @@ import { PersistedBookmark, Bookmark } from './shared/bookmark-types.service';
 })
 export class BookmarkComponent implements OnInit {
 
-  bookmarkToSearch: PersistedBookmark;
+  bookmarkToSearch: BookmarkSO;
 
   savedBookmarks: Array<Bookmark>;
   searchedBookmarks: Array<Bookmark>;
@@ -55,7 +55,7 @@ export class BookmarkComponent implements OnInit {
    * Initialize and reinitialize the search objects to be empty
    */
   initSearch(): void {
-    this.bookmarkToSearch = new PersistedBookmark();
+    this.bookmarkToSearch = new BookmarkSO();
     console.log(this.searchedBookmarks);
     this.showSearchSpinner = false;
   }

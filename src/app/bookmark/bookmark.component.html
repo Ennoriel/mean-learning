@@ -5,23 +5,19 @@
     <mat-card>
       <h1>Search a Bookmark</h1>
       <mat-form-field>
-        <input matInput id="name" [(ngModel)]="bookmarkToSearch.name" placeholder="Name of the bookmark?">
+        <input matInput [(ngModel)]="bookmarkToSearch.name" placeholder="Name of the bookmark?">
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput id="npm" [(ngModel)]="bookmarkToSearch.npm" placeholder="Npm link?">
+        <input matInput [(ngModel)]="bookmarkToSearch.resourceName" placeholder="Name of one of its resources?">
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput id="github" [(ngModel)]="bookmarkToSearch.github" placeholder="Github link?">
-      </mat-form-field>
-
-      <mat-form-field>
-        <input matInput id="web" [(ngModel)]="bookmarkToSearch.web" placeholder="Official website link?">
+        <input matInput [(ngModel)]="bookmarkToSearch.resourceUrl" placeholder="Url of one of its resources?">
       </mat-form-field>
 
       <button mat-raised-button (click)="searchBookmarks()">Search bookmarks</button>
-      <button mat-raised-button (click)="initSearch()">Reinit search</button>
+      <button mat-raised-button (click)="initSearch()">Reset search criterias </button>
       <mat-spinner [style.display]="showSearchSpinner ? 'block' : 'none'"></mat-spinner>
     </mat-card>
 

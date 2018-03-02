@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
-import { Bookmark, PersistedBookmark } from './bookmark-types.service';
+import { Bookmark, PersistedBookmark, BookmarkSO } from './bookmark-types.service';
 
 @Injectable()
 export class BookmarkRepositoryService {
@@ -19,7 +19,7 @@ export class BookmarkRepositoryService {
      * Search bookmarks
      * @param body criterias
      */
-    get(body: PersistedBookmark): Observable<Array<PersistedBookmark>> {
+    get(body: BookmarkSO): Observable<Array<PersistedBookmark>> {
         return this._http.get<Array<PersistedBookmark>>(this._getQueryString(this.URL, body));
     }
 

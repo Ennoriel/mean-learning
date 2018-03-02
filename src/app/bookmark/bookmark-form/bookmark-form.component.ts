@@ -7,7 +7,7 @@ import {
 import {  } from 'protractor';
 import { BookmarkRepositoryService } from '../shared/bookmark-repository.service';
 import { Observable } from 'rxjs/Observable';
-import { PersistedBookmark, Url } from '../shared/bookmark-types.service';
+import { PersistedBookmark, PersistedResource } from '../shared/bookmark-types.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
@@ -24,8 +24,6 @@ export class BookmarkFormComponent implements OnInit {
   isFormCreate: boolean;
   title: string;
 
-  urlList: Array<Url>;
-
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
 
@@ -39,25 +37,32 @@ export class BookmarkFormComponent implements OnInit {
       name: ['', Validators.required]
     });
     this.secondFormGroup = this._formBuilder.group({
-      npm: ['', Validators.required],
-      github: ['', Validators.required]
+      resourceName_0: ['', Validators.required],
+      resourceLink_0: ['', Validators.required]
     });
 
-    this.urlList = [];
-    this.urlList.push({name: 'npm'});
-    this.urlList.push({name: 'github'});
     this.initSave();
     this.isFormCreate = !this.model._id;
     this.title = this.isFormCreate ? 'Save a new bookmark' : 'Update the bookmark';
   }
 
   initSave(): void {
-    this.model = this.model ? Object.assign({}, this.model) : new PersistedBookmark();
+    if (!this.model) {
+      this.model = new PersistedBookmark();
+    }
     this.showSaveSpinner = false;
   }
 
   reinitSave(): void {
     this.model = new PersistedBookmark();
+  }
+
+  removeResource(index): void {
+    this.model.resources.splice(index, 1);
+  }
+
+  addResource(): void {
+    this.model.resources.push(new PersistedResource());
   }
 
   saveBookmark(): void {
@@ -74,7 +79,7 @@ export class BookmarkFormComponent implements OnInit {
           alert(error);
         });
     } else {
-      this._bookmarkRepositoryService.post(Object.assign(this.model, {url: this.urlList})).subscribe(savedBookmark => {
+      this._bookmarkRepositoryService.post(this.model).subscribe(savedBookmark => {
         this.reinitSave();
         this.afterBookmarkSaved.emit(savedBookmark);
         this.showSaveSpinner = false;
