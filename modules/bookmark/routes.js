@@ -38,7 +38,8 @@ app.get('/bookmark', function(req, res, next) {
                 'name': 1,
                 'npm': 1,
                 'github': 1,
-                'web': 1
+                'web': 1,
+                'url': 1
             },
             'limit': 20
         };

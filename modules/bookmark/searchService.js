@@ -1,4 +1,4 @@
-
+const lodashSet = require('lodash/set');
 
 module.exports = {
 
@@ -10,7 +10,7 @@ module.exports = {
 
         log("parsedUrl", parsedUrl);
 
-        var query = getQuery(parsedUrl);
+        var query = setQuery(parsedUrl);
         
         log("query", query);
 
@@ -45,29 +45,41 @@ function log(objectKey, objectValue) {
  * Intialize the Query object to perform DB search
  * @param {Parsed URL} parsedUrl 
  */
-function getQuery(parsedUrl) {
+function setQuery(parsedUrl) {
 
     let query = {};
 
-    getStringQuery(query, 'name',   parsedUrl.name);
-    getStringQuery(query, 'npm',    parsedUrl.npm);
-    getStringQuery(query, 'github', parsedUrl.github);
-    getStringQuery(query, 'web',    parsedUrl.web);
+    setStringQuery(query, 'name', parsedUrl.name);
+    setArrayQuery(query, 'resources', 'name', parsedUrl.resourceName);
+    setArrayQuery(query, 'resources', 'url', parsedUrl.resourceUrl);
 
     return query;
 }
 
 /**
- * Add a criteria to the db query
+ * Add a string criteria to the db query
  * @param {Object} query db query
  * @param {String} paramKey db param
  * @param {String} paramValue param value
  */
-function getStringQuery(query, paramKey, paramValue) {
+function setStringQuery(query, paramKey, paramValue) {
     if(paramValue) {
         query[paramKey] = {
             '$regex': paramValue,
             '$options': 'i'
         }
+    }
+}
+
+/**
+ * Add an array criteria to the db query
+ * @param {Object} query db query
+ * @param {String} arrayKey db param
+ * @param {String} paramKey db param
+ * @param {String} paramValue param value
+ */
+function setArrayQuery(query, arrayKey, paramKey, paramValue) {
+    if(paramValue) {
+        query[arrayKey + '.' + paramKey] = paramValue;
     }
 }
