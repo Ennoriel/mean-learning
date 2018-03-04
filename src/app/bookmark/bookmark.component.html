@@ -16,8 +16,14 @@
         <input matInput [(ngModel)]="bookmarkToSearch.resourceUrl" placeholder="Url of one of its resources?">
       </mat-form-field>
 
-      <button mat-raised-button (click)="searchBookmarks()">Search bookmarks</button>
-      <button mat-raised-button (click)="initSearch()">Reset search criterias </button>
+      <button mat-button (click)="searchBookmarks()">
+        <mat-icon class="mat-icon-search">search</mat-icon>
+        Search bookmarks
+      </button>
+      <button mat-button (click)="initSearch()">
+        <mat-icon class="mat-icon-replay">replay</mat-icon>
+        Reset search criterias
+      </button>
       <mat-spinner [style.display]="showSearchSpinner ? 'block' : 'none'"></mat-spinner>
     </mat-card>
 
@@ -28,8 +34,14 @@
       <div *ngFor="let bookmark of searchedBookmarks; index as index">
         <mat-card>
           <pre>{{ bookmark | json }}</pre>
-          <button mat-raised-button (click)="showUpdateForm(bookmark)">Update bookmark</button>
-          <button mat-raised-button (click)="deleteBookmark(bookmark, index)">Delete bookmark</button>
+          <button mat-button (click)="showUpdateForm(bookmark)">
+            <mat-icon class="mat-icon-create">create</mat-icon>
+            Update bookmark
+          </button>
+          <button mat-button (click)="deleteBookmark(bookmark, index)">
+            <mat-icon class="mat-icon-delete_forever">delete_forever</mat-icon>
+            Delete bookmark
+          </button>
           <app-bookmark-form *ngIf="bookmark.showUpdateInputs"
                             [(model)]="searchedBookmarks[index].persisted"
                             (afterBookmarkSaved)="displayBookmarkUpdated($event)">

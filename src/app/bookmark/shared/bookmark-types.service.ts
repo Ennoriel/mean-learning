@@ -8,16 +8,12 @@ export class PersistedResource implements PersistedResource {
     link?: String;
 
     constructor () {
-        this.name = '';
-        this.link = '';
     }
 }
 
 export interface PersistedBookmark {
     name?: String;
-    github?: String;
     resources?: Array<PersistedResource>;
-    web?: String;
     _id: String;
 }
 
