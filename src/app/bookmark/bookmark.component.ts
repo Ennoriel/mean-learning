@@ -8,7 +8,7 @@ import { PersistedBookmark, Bookmark, BookmarkSO } from './shared/bookmark-types
 @Component({
   selector: 'app-bookmark',
   templateUrl: './bookmark.component.html',
-  styleUrls: ['./bookmark.component.css']
+  styleUrls: ['./bookmark.component.scss']
 })
 export class BookmarkComponent implements OnInit {
 
@@ -56,7 +56,6 @@ export class BookmarkComponent implements OnInit {
    */
   initSearch(): void {
     this.bookmarkToSearch = new BookmarkSO();
-    console.log(this.searchedBookmarks);
     this.showSearchSpinner = false;
   }
 
@@ -85,7 +84,6 @@ export class BookmarkComponent implements OnInit {
    * @param index the index of the bookmark in the array displayed
    */
   deleteBookmark(bookmark: Bookmark, index: number): void {
-    console.log(bookmark.persisted._id);
     this._bookmarkRepositoryService.delete(bookmark.persisted._id).subscribe(_ => {
       this.searchedBookmarks.splice(index, 1);
     },
