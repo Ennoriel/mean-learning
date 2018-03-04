@@ -67,6 +67,10 @@ export class BookmarkComponent implements OnInit {
     this._bookmarkRepositoryService.get(this.bookmarkToSearch).subscribe(resultList => {
       this.searchedBookmarks = resultList.map(result => new Bookmark(result));
       this.showSearchSpinner = false;
+    },
+    error => {
+      this.showSearchSpinner = false;
+      alert(error);
     });
   }
 

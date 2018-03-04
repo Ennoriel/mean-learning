@@ -20,7 +20,10 @@ export class BookmarkRepositoryService {
      * @param body criterias
      */
     get(body: BookmarkSO): Observable<Array<PersistedBookmark>> {
-        return this._http.get<Array<PersistedBookmark>>(this._getQueryString(this.URL, body));
+        return this._http
+            .get<Array<PersistedBookmark>>(this._getQueryString(this.URL, body))
+            .map(res => res)
+            .catch(this._handleError);
     }
 
     /**
