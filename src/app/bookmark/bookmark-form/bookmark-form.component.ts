@@ -30,6 +30,9 @@ export class BookmarkFormComponent implements OnInit {
     private _formBuilder: FormBuilder
   ) { }
 
+  /**
+   * getter of the resource form array used in the second form group
+   */
   get formResources(): FormArray {
     return this.secondFormGroup.get('resources') as FormArray;
   }
@@ -41,6 +44,9 @@ export class BookmarkFormComponent implements OnInit {
     this.title = this.isFormCreate ? 'Save a new bookmark' : 'Update the bookmark';
   }
 
+  /**
+   * Init model according to the editing mode (cration / update)
+   */
   initModel(): void {
     if (!this.model) {
       this.model = new PersistedBookmark();
@@ -50,17 +56,26 @@ export class BookmarkFormComponent implements OnInit {
     this.isFormCreate = !this.model._id;
   }
 
+  /**
+   * Init form
+   */
   initForm(): void {
     this.initFirstFormGroup();
     this.initSecondFormGroup();
   }
 
+  /**
+   * Init the first form group, used for bookmark details
+   */
   initFirstFormGroup(): void {
     this.firstFormGroup = this._formBuilder.group({
       name: [this.model.name, Validators.required]
     });
   }
 
+  /**
+   * Init the second form group, used for bookmark resources
+   */
   initSecondFormGroup(): void {
     this.secondFormGroup = new FormGroup({
       'resources' : new FormArray([])
@@ -69,6 +84,9 @@ export class BookmarkFormComponent implements OnInit {
     this.model.resources.forEach(resource => this.initSecondFormResource(resource));
   }
 
+  /**
+   * Init the form array, used in the second form group for bookmark resources
+   */
   initSecondFormResource(resource: PersistedResource): void {
     this.formResources.push(new FormGroup({
       'name': new FormControl(resource.name, [Validators.required]),
@@ -76,12 +94,20 @@ export class BookmarkFormComponent implements OnInit {
     }));
   }
 
-  reinitSave(): void {
+  /**
+   * Triggered by a user action
+   * Init model for another search
+   */
+  reinitModel(): void {
     this.model = new PersistedBookmark();
     this.initFirstFormGroup();
     this.initSecondFormGroup();
   }
 
+  /**
+   * Triggered by a user action
+   * Init another resource in the form
+   */
   addResource() {
     if (this.secondFormGroup.invalid) { return; }
 
@@ -92,11 +118,20 @@ export class BookmarkFormComponent implements OnInit {
     this.model.resources.push(new PersistedResource());
   }
 
+  /**
+   * Triggered by a user action
+   * Remove a resource
+   * @param index index of the resource to remove
+   */
   removeResource(index): void {
     this.formResources.removeAt(index);
     this.model.resources.splice(index, 1);
   }
 
+  /**
+   * Triggered by a user action
+   * Save or update the bookmark
+   */
   saveBookmark(): void {
     if (!this.secondFormGroup.valid) {
       return;
@@ -115,7 +150,7 @@ export class BookmarkFormComponent implements OnInit {
         });
     } else {
       this._bookmarkRepositoryService.post(this.model).subscribe(savedBookmark => {
-        this.reinitSave();
+        this.reinitModel();
         this.afterBookmarkSaved.emit(savedBookmark);
         this.showSaveSpinner = false;
       },
