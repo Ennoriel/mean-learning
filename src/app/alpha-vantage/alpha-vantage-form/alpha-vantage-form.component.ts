@@ -30,11 +30,9 @@ export class AlphaVantageFormComponent implements OnInit {
   fetchData() {
 
     this.showSpinner = true;
-    // console.log(this.model.getQuery());
 
     this._alphaVantageRepositoryService.getApiKey().subscribe(res => {
 
-      console.log(res);
       this.apiKey = res.apiKey;
 
       this._alphaVantageApiService.get(this.model.getQuery(this.apiKey)).subscribe(results => {
