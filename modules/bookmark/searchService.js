@@ -51,7 +51,7 @@ function setQuery(parsedUrl) {
 
     setStringQuery(query, 'name', parsedUrl.name);
     setArrayQuery(query, 'resources', 'name', parsedUrl.resourceName);
-    setArrayQuery(query, 'resources', 'url', parsedUrl.resourceUrl);
+    setArrayQuery(query, 'resources', 'link', parsedUrl.resourceUrl);
 
     return query;
 }
