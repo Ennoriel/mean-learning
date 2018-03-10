@@ -1,3 +1,14 @@
 <h1>Alpha Vantage</h1>
 
 <app-alpha-vantage-form></app-alpha-vantage-form>
+
+<app-pie-chart [data]="data"
+				[config]="config"
+				[elementId]="elementId">
+</app-pie-chart>
+
+<app-line-chart [columnNames]="columnNames"
+				[rows]="rows"
+				[config]="lineChartConfig"
+				[elementId]="elementIdLine">
+</app-line-chart>

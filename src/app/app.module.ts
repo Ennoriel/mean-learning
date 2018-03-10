@@ -17,9 +17,13 @@ import { AlphaVantageApiService } from './alpha-vantage/shared/alpha-vantage-api
 import { AlphaVantageRepositoryService } from './alpha-vantage/shared/alpha-vantage-repository.service';
 import { BookmarkRepositoryService } from './bookmark/shared/bookmark-repository.service';
 // import { BookmarkTypesService } from './bookmark/shared/bookmark-types.service';
+import { GooglePieChartService } from './shared/services/google-pie-chart.service';
+import { GoogleLineChartService } from './shared/services/google-line-chart.service';
+import { PieChartComponent } from './shared/components/pie-chart/pie-chart.component';
+import { LineChartComponent } from './shared/components/line-chart/line-chart.component';
 
 const myRoots: Routes = [
-  { path: '', redirectTo: '/alpha-vantage', pathMatch: 'full' },
+  { path: '', redirectTo: '/bookmark', pathMatch: 'full' },
   { path: 'alpha-vantage', component: AlphaVantageComponent },
   { path: 'bookmark', component: BookmarkComponent }
 ];
@@ -30,7 +34,9 @@ const myRoots: Routes = [
     AlphaVantageComponent,
     AlphaVantageFormComponent,
     BookmarkComponent,
-    BookmarkFormComponent
+    BookmarkFormComponent,
+    PieChartComponent,
+    LineChartComponent
 ],
   imports: [
     BrowserModule,
@@ -44,11 +50,16 @@ const myRoots: Routes = [
   providers: [
     AlphaVantageApiService,
     AlphaVantageRepositoryService,
-    BookmarkRepositoryService
-    // BookmarkTypesService
+    BookmarkRepositoryService,
+    GooglePieChartService,
+    GoogleLineChartService
   ],
   bootstrap: [
     AppComponent
+  ],
+  exports: [
+    PieChartComponent,
+    LineChartComponent
   ]
 })
 export class AppModule { }
