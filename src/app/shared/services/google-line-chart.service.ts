@@ -11,13 +11,13 @@ export class GoogleLineChartService extends GoogleChartsBaseService {
         super();
     }
 
-    public BuildLineChart(elementId: string, columnNames: string[], rows: any[], config: LineChartConfig): void {
+    public BuildLineChart(elementId: string, columnOptions: any[], rows: any[], config: LineChartConfig): void {
         const chartFunc = () => new google.visualization.LineChart(document.getElementById(elementId));
 
         const datatableFunc = () => {
             const data = new google.visualization.DataTable();
             data.addColumn('number', 'X');
-            columnNames.forEach(columnName => data.addColumn('number', columnName));
+            columnOptions.forEach(columnOption => data.addColumn(columnOption.type, columnOption.name));
             data.addRows(rows);
             return data;
         };

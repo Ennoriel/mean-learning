@@ -10,7 +10,7 @@ import { GoogleLineChartService } from '../../services/google-line-chart.service
 export class LineChartComponent implements OnInit {
 
   @Input() elementId: string;
-  @Input() columnNames: any[];
+  @Input() columnOptions: any[];
   @Input() rows: any[];
   @Input() config: LineChartConfig;
 
@@ -19,7 +19,7 @@ export class LineChartComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this._lineChartService.BuildLineChart(this.elementId, this.columnNames, this.rows, this.config);
+    this._lineChartService.BuildLineChart(this.elementId, this.columnOptions, this.rows, this.config);
   }
 
 }

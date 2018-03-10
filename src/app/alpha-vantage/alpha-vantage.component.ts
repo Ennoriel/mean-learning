@@ -4,6 +4,7 @@ import {
 } from '@angular/core';
 import { PieChartConfig } from '../shared/Models/PieChartConfig';
 import { LineChartConfig } from '../shared/models/LineChartConfig';
+import { MatTabChangeEvent } from '@angular/material';
 
 @Component({
   selector: 'app-alpha-vantage',
@@ -12,26 +13,35 @@ import { LineChartConfig } from '../shared/models/LineChartConfig';
 })
 export class AlphaVantageComponent implements OnInit {
 
-  route: String;
+    route: String;
 
-  data: any[];
-  config: PieChartConfig;
-  elementId: string;
+    data: any[];
+    config: PieChartConfig;
+    elementId: string;
 
-  columnNames: string[];
-  rows: any[];
-  lineChartConfig: LineChartConfig;
-  elementIdLine: string;
+    columnOptions: any[];
+    rows: any[];
+    lineChartConfig: LineChartConfig;
+    elementIdLine: string;
 
-  constructor() {
-  }
+    isTestTabActive = false;
 
-  ngOnInit() {
-    this.route = location.pathname;
+    constructor() {
+    }
 
-    this._initPieChart();
-    this._initLineChart();
-  }
+    ngOnInit() {
+        this.route = location.pathname;
+    }
+
+    tabChanged = (tabChangeEvent: MatTabChangeEvent): void => {
+        if (tabChangeEvent.index === 1) {
+            this.isTestTabActive = true;
+            this._initPieChart();
+            this._initLineChart();
+        } else {
+            this.isTestTabActive = false;
+        }
+    }
 
   /**
    * http://anthonygiretti.com/2017/10/12/using-google-charts-in-angular-4-project-part-2/
@@ -51,7 +61,17 @@ export class AlphaVantageComponent implements OnInit {
   }
 
     private _initLineChart() {
-        this.columnNames = ['azer', 'tyuiop'];
+        console.log('1');
+        this.columnOptions = [
+            {
+                type: 'number',
+                name: 'example 1'
+            },
+            {
+                type: 'number',
+                name: 'example 2'
+            }
+        ];
         this.rows = [
             [0, 0, 0],
             [1, 10, 5],
