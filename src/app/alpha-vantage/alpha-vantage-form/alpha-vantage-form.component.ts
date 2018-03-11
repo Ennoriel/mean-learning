@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { AVIntradaySeries } from '../shared/alpha-vantage-api-query';
 import { AlphaVantageApiService } from '../shared/alpha-vantage-api.service';
 import { AlphaVantageRepositoryService } from '../shared/alpha-vantage-repository.service';
+import { LineChartConfig } from '../../shared/models/LineChartConfig';
 
 @Component({
     selector: 'app-alpha-vantage-form',
@@ -16,6 +17,11 @@ export class AlphaVantageFormComponent implements OnInit {
     resultsAll: any;
     results: any;
     apiKey: String;
+
+    // Params for the chart
+    columnOptions: any[];
+    lineChartConfig: LineChartConfig;
+    elementIdLine: string;
 
     constructor(
         private _alphaVantageApiService: AlphaVantageApiService,
@@ -33,24 +39,41 @@ export class AlphaVantageFormComponent implements OnInit {
 
         this._alphaVantageRepositoryService.getApiKey().subscribe(res => {
 
-        this.apiKey = res.apiKey;
+            this.apiKey = res.apiKey;
 
-        this._alphaVantageApiService.get(this.model.getQuery(this.apiKey)).subscribe(results => {
-            this.resultsAll = results;
-            this.results = {
-                name: this.model.symbol,
-                series: []
-            };
+            this._alphaVantageApiService.get(this.model.getQuery(this.apiKey)).subscribe(results => {
+                this.resultsAll = results;
+                this.results = {
+                    name: this.model.symbol,
+                    series: []
+                };
 
-            const data = results['Time Series (60min)'];
-            for (const property in data) {
-                if (data.hasOwnProperty(property)) {
-                    this.results.series.push({'name': property, 'value': data[property]['1. open']});
+                this.columnOptions = [
+                    {
+                        type: 'datetime',
+                        name: 'X'
+                    },
+                    {
+                        type: 'number',
+                        name: this.results.name
+                    }
+                ];
+
+                const data = results['Time Series (60min)'];
+                for (const property in data) {
+                    if (data.hasOwnProperty(property)) {
+                        this.results.series.push([
+                            new Date(property),
+                            Number(data[property]['1. open'])
+                        ]);
+                    }
                 }
-            }
 
-            this.showSpinner = false;
-        });
+                this.lineChartConfig = new LineChartConfig('Socks', 'Date', 'Price (US $)', ['blue']);
+                this.elementIdLine = this.results.name;
+
+                this.showSpinner = false;
+            });
 
         });
     }

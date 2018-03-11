@@ -65,6 +65,10 @@ export class AlphaVantageComponent implements OnInit {
         this.columnOptions = [
             {
                 type: 'number',
+                name: 'X'
+            },
+            {
+                type: 'number',
                 name: 'example 1'
             },
             {

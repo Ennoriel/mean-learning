@@ -16,7 +16,6 @@ export class GoogleLineChartService extends GoogleChartsBaseService {
 
         const datatableFunc = () => {
             const data = new google.visualization.DataTable();
-            data.addColumn('number', 'X');
             columnOptions.forEach(columnOption => data.addColumn(columnOption.type, columnOption.name));
             data.addRows(rows);
             return data;
