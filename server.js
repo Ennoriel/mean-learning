@@ -1,5 +1,9 @@
 'use strict';
+
 const express = require('express');
+
+var bodyParser = require('body-parser');
+var expressJwt = require('express-jwt');
 
 /**
  * Services
@@ -15,10 +19,13 @@ const errorHandlerRoute = require('./modules/error');
 
 const app = express();
 
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "http://localhost:4200");
     res.header("Vary", "Origin");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, Accept");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, Accept, authorization");
     res.header("Access-Control-Allow-Methods", "GET, POST, PUT, OPTIONS, DELETE");
     res.header("Content-Type", "text/json")
     next();
@@ -28,6 +35,23 @@ app.use(function(req, res, next) {
     //     next();
     // }
 });
+
+app.use(expressJwt({
+    secret: 'SECRET',
+    getToken: function (req) {
+        
+        if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
+            
+            return req.headers.authorization.split(' ')[1];
+        } else if (req.query && req.query.token) {
+            
+            return req.query.token;
+        }
+        return null;
+    }
+}).unless({ path: ['/users/authenticate', '/users/register'] }));
+
+app.use('/users', require('./modules/user/routes'));
 
 app.use(bookmarkSearchRoute);
 app.use(AlphaVantageRoute);
@@ -39,8 +63,6 @@ app.use(AlphaVantageRoute);
 if(commandLineUtils.getCommandLineOptions().launchServer === 'Y') {
     var server = app.listen(3000, function() {
         var port = server.address().port;
-        console.log(new Date());
-        console.log('Express server listening on port %s.', port);
     });
 }
 
