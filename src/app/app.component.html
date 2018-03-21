@@ -4,8 +4,12 @@
 
 		<span class="example-spacer"></span>
 
+		<button mat-button routerLink="/">Accueil</button>
 		<button mat-button routerLink="/alpha-vantage">Alpha Vantage</button>
 		<button mat-button routerLink="/bookmark">Bookmarks</button>
+		<button mat-button routerLink="/utilisateurs">Utilisateurs</button>
+		<button mat-button routerLink="/login" [hidden]="isLogged">Login</button>
+		<button mat-button routerLink="/login" [hidden]="!isLogged">Logout</button>
 	</mat-toolbar-row>
 </mat-toolbar>
 

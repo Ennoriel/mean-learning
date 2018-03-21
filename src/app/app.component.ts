@@ -1,16 +1,22 @@
 import { Component } from '@angular/core';
 import { OnInit, OnChanges } from '@angular/core/src/metadata/lifecycle_hooks';
-import { AlphaVantageApiService } from './alpha-vantage/shared/alpha-vantage-api.service';
+import { AuthenticationService } from './shared/services/authentication.service';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss']
 })
 
-export class AppComponent {
+export class AppComponent implements OnInit {
 
-  constructor (
-    private _alphaVantageApiService: AlphaVantageApiService
-  ) {}
+    isLogged: boolean;
+
+    constructor (
+        private _authService: AuthenticationService
+    ) {}
+
+    ngOnInit () {
+        this.isLogged = this._authService.isLogged();
+    }
 }
