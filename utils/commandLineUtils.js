@@ -33,7 +33,7 @@ module.exports = {
                     content: 'Project home: [underline]{https://notYetAvailable}'
                 }
             ])
-            console.log(usage);
+            
             process.exit();
         }
     

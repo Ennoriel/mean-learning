@@ -34,8 +34,8 @@ app.get('/bookmark', function(req, res, next) {
 
         var options = {
             'projection' : {
-                '_id': 1,
-                'name': 1,
+				'_id': 1,
+				'name': 1,
                 'resources': 1
             },
             'limit': 20
@@ -57,7 +57,6 @@ app.get('/bookmark', function(req, res, next) {
  * Save a new bookmark
  */
 app.post('/bookmark', function(req, res, next) {
-    console.log('save a bookmark');
 
     const BOOKMARK = req.body;
 
@@ -67,7 +66,6 @@ app.post('/bookmark', function(req, res, next) {
     
         if (err) throw err
     
-        console.log('inserting bookmark: ' + BOOKMARK.name);
         db.db(DB_CREDENTIALS.DBNAME).collection('bookmark').insert(BOOKMARK);
 
         db.close();
@@ -80,7 +78,6 @@ app.post('/bookmark', function(req, res, next) {
  * Update a bookmark
  */
 app.put('/bookmark/:bookmarkId', function(req, res, next) {
-    console.log('update a bookmark.');
 
     const BOOKMARK = req.body;
     delete BOOKMARK._id;
@@ -93,7 +90,6 @@ app.put('/bookmark/:bookmarkId', function(req, res, next) {
     
         if (err) throw err
     
-        console.log('updating bookmark: ' + BOOKMARK.name);
         db.db(DB_CREDENTIALS.DBNAME)
           .collection('bookmark')
           .update({'_id': ObjectId(_ID)}, BOOKMARK)
@@ -111,10 +107,8 @@ app.put('/bookmark/:bookmarkId', function(req, res, next) {
  * Delete a bookmark
  */
 app.delete('/bookmark/:bookmarkId', function(req, res, next) {
-    console.log('Delete the bookmark: ' + req.params.bookmarkId);
 
     const _ID = req.params.bookmarkId;
-    console.log(_ID);
     
     mongoDb.MongoClient.connect(DB_CREDENTIALS.URI, (err, db) => {
     
