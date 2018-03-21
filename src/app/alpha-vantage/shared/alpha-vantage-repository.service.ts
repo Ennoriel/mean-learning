@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { appConfig } from '../../app.config';
 
 @Injectable()
 export class AlphaVantageRepositoryService {
 
-    URL = 'http://127.0.0.1:3000/apiVantageApiKey';
+    URL = appConfig.apiUrl + '/apiVantageApiKey';
 
     constructor( private _http: HttpClient ) { }
 

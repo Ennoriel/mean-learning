@@ -8,10 +8,12 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import { Bookmark, PersistedBookmark, BookmarkSO } from './bookmark-types.service';
 
+import { appConfig } from '../../app.config';
+
 @Injectable()
 export class BookmarkRepositoryService {
 
-    URL = 'http://127.0.0.1:3000/bookmark';
+    URL = appConfig.apiUrl + '/bookmark';
 
     constructor( private _http: HttpClient ) { }
 

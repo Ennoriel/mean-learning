@@ -61,7 +61,7 @@ export class AlphaVantageComponent implements OnInit {
   }
 
     private _initLineChart() {
-        console.log('1');
+
         this.columnOptions = [
             {
                 type: 'number',
