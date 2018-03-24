@@ -1,0 +1,22 @@
+button {
+    ::ng-deep span {
+        display: flex;
+    }
+
+    mat-icon {
+        margin: 5px;
+    }
+}
+
+.mat-icon-warn {
+    color: red;
+}
+
+.mat-icon-done {
+    color: green;
+}
+
+.mat-icon-save,
+.mat-icon-star {
+    color: blue;
+}

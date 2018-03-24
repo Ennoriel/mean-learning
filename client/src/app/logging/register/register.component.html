@@ -1,0 +1,41 @@
+<mat-card>
+    <h1>Register</h1>
+    <form [formGroup]="formGroup">
+        <mat-form-field>
+            <input matInput formControlName="firstName" [(ngModel)]="model.firstName" placeholder="First Name?">
+            <mat-error *ngIf="formGroup.controls.firstName.hasError('required')">
+                Please enter your first name
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput formControlName="lastName" [(ngModel)]="model.lastName" placeholder="Last Name?">
+            <mat-error *ngIf="formGroup.controls.lastName.hasError('required')">
+                Please enter your last name
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput formControlName="username" [(ngModel)]="model.username" placeholder="Username?">
+            <mat-error *ngIf="formGroup.controls.lastName.hasError('required')">
+                Please enter your username
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput type="password" formControlName="password" [(ngModel)]="model.password" placeholder="Password?">
+            <mat-error *ngIf="formGroup.controls.password.hasError('minlength')">
+                Please enter at least 8 caracters
+            </mat-error>
+            <mat-error *ngIf="formGroup.controls.password.hasError('required')">
+                Please enter a password
+            </mat-error>
+        </mat-form-field>
+
+        <button [disabled]="loading || formGroup.invalid" mat-button (click)="register()">
+            <mat-icon class="mat-icon-build">build</mat-icon>
+            Register
+        </button>
+        <button mat-button [routerLink]="['/']">
+            <mat-icon class="mat-icon-undo">undo</mat-icon>
+            Cancel
+        </button>
+    </form>
+</mat-card>

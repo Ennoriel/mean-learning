@@ -1,0 +1,68 @@
+<h1>{{ title }}</h1>
+<mat-card>
+	<mat-horizontal-stepper [linear]="true" #stepper="matHorizontalStepper">
+		<mat-step [stepControl]="firstFormGroup">
+			<form [formGroup]="firstFormGroup">
+				<ng-template matStepLabel>Fill out bookmark name</ng-template>
+
+				<mat-form-field>
+					<input matInput id="name" formControlName="name" [(ngModel)]="model.name" placeholder="Name of the bookmark?">
+				</mat-form-field>
+				<div>
+					<button mat-button matStepperNext [disabled]="this.firstFormGroup.invalid">
+						<mat-icon class="mat-icon-chevron_right">chevron_right</mat-icon>
+						Next
+					</button>
+				</div>
+			</form>
+		</mat-step>
+		<mat-step [stepControl]="secondFormGroup">
+			<form [formGroup]="secondFormGroup">
+				<ng-template matStepLabel>Fill out bookmark details</ng-template>
+
+				<div formArrayName="resources">
+					<div *ngFor="let resource of model.resources; index as index" formGroupName="{{ index }}">
+						<mat-form-field>
+							<input matInput formControlName="name" [(ngModel)]="resource.name" placeholder="Resource name?">
+						</mat-form-field>
+						<mat-form-field>
+							<input matInput formControlName="link" [(ngModel)]="resource.link" placeholder="Resource link?">
+						</mat-form-field>
+						<mat-icon *ngIf="formResources.at(index).invalid" class="mat-icon-warn">warning</mat-icon>
+						<mat-icon *ngIf="formResources.at(index).valid" class="mat-icon-done">done</mat-icon>
+						<button mat-icon-button (click)="removeResource(index)">
+							<mat-icon>clear</mat-icon>
+						</button>
+					</div>
+				</div>
+
+				<div>
+					<button mat-button (click)="addResource()" [disabled]="this.secondFormGroup.invalid">
+						<mat-icon class="mat-icon-add">add</mat-icon>
+						Add another resource
+					</button>
+					<button mat-button (click)="initSecondFormGroup(); stepper.reset()">
+						<mat-icon class="mat-icon-arrow_back">arrow_back</mat-icon>
+						Go back to the beginning
+					</button>
+					<button mat-button matStepperNext (click)="saveBookmark()">
+						<mat-icon class="mat-icon-save">save</mat-icon>
+						Save bookmark
+					</button>
+					<mat-spinner [style.display]="showSaveSpinner ? 'block' : 'none'"></mat-spinner>
+				</div>
+
+			</form>
+		</mat-step>
+		<mat-step>
+			<ng-template matStepLabel>Done</ng-template>
+			You are now done.
+			<div>
+				<button mat-button (click)="stepper.reset()">
+					<mat-icon class="mat-icon-star">star</mat-icon>
+					Save another bookmark
+				</button>
+			</div>
+		</mat-step>
+	</mat-horizontal-stepper>
+</mat-card>

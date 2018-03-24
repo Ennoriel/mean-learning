@@ -1,0 +1,18 @@
+<!-- Property dynamicHeight used to remove unwanted scrollbar -->
+<mat-tab-group (selectedTabChange)="tabChanged($event)" [dynamicHeight]="true">
+    <mat-tab label="Alpha Vantage">
+
+        <app-alpha-vantage-form></app-alpha-vantage-form>
+
+    </mat-tab>
+    <mat-tab label="Tests">
+
+        <div *ngIf="isTestTabActive">
+        <app-pie-chart [data]="data" [config]="config" [elementId]="elementId">
+        </app-pie-chart>
+
+        <app-line-chart [columnOptions]="columnOptions" [rows]="rows" [config]="lineChartConfig" [elementId]="elementIdLine">
+        </app-line-chart>
+    </div>
+    </mat-tab>
+</mat-tab-group>

@@ -1,0 +1,32 @@
+<mat-card>
+    <mat-form-field>
+        <input matInput [(ngModel)]="model.symbol" placeholder="Name of the equity?">
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput [(ngModel)]="model.interval" placeholder="Time interval?">
+    </mat-form-field>
+
+    <button mat-raised-button (click)="fetchData()">Fetch data</button>
+    <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
+</mat-card>
+
+<!--
+<br>
+
+<mat-card *ngIf="!!resultsAll">
+    <pre> {{ resultsAll | json }} </pre>
+</mat-card>
+
+<br>
+
+<mat-card *ngIf="!!results">
+    <pre> {{ results | json }} </pre>
+</mat-card>
+-->
+<br>
+
+<mat-card *ngIf="!!results">
+    <app-line-chart [columnOptions]="columnOptions" [rows]="results.series" [config]="lineChartConfig" [elementId]="elementIdLine">
+    </app-line-chart>
+</mat-card>

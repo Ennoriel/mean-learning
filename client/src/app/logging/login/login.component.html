@@ -1,0 +1,20 @@
+<mat-card>
+    <h1>Login</h1>
+    <form [formGroup]="formGroup">
+        <mat-form-field>
+            <input matInput formControlName="username" [(ngModel)]="model.username" placeholder="Username?">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput type="password" formControlName="password" [(ngModel)]="model.password" placeholder="Password?">
+        </mat-form-field>
+
+        <button [disabled]="loading || this.formGroup.invalid" mat-button (click)="login()">
+            <mat-icon class="mat-icon-forward">forward</mat-icon>
+            Login
+        </button>
+        <button mat-button [routerLink]="['/register']">
+            <mat-icon class="mat-icon-build">build</mat-icon>
+            Register
+        </button>
+    </form>
+</mat-card>
