@@ -38,6 +38,9 @@ export class LoginComponent implements OnInit {
         this._authenticationService.logout();
     }
 
+    /**
+     * Init form group
+     */
     _initFormGroup() {
         this.formGroup = this._formBuilder.group({
             username: [this.model.username, Validators.required],
