@@ -6,7 +6,13 @@
 
 		<button mat-button routerLink="/">Accueil</button>
 		<button mat-button routerLink="/alpha-vantage">Alpha Vantage</button>
-		<button mat-button routerLink="/bookmark">Bookmarks</button>
+        <button mat-button [matMenuTriggerFor]="menu">Bookmarks</button>
+
+        <mat-menu #menu="matMenu" yPosition="below" [overlapTrigger]="false">
+            <button mat-menu-item routerLink="/bookmark">Bookmarks</button>
+            <button mat-menu-item routerLink="bookmark/resource">Resources</button>
+        </mat-menu>
+
 		<button mat-button routerLink="/utilisateurs">Utilisateurs</button>
 		<button mat-button routerLink="/login" [hidden]="isLogged">Login</button>
 		<button mat-button routerLink="/login" [hidden]="!isLogged">Logout</button>

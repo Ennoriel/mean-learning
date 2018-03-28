@@ -34,6 +34,7 @@ import { UserService } from './shared/services/user.service';
 import { AuthenticationService } from './shared/services/authentication.service';
 import { RouterService } from './shared/services/router.service';
 import { AccueilComponent } from './accueil/accueil.component';
+import { ResourceComponent } from './bookmark/resource/resource/resource.component';
 
 // const myRoots: Routes = [
 //     { path: '', redirectTo: '/bookmark', pathMatch: 'full' },
@@ -48,6 +49,7 @@ import { AccueilComponent } from './accueil/accueil.component';
         AlphaVantageFormComponent,
         BookmarkComponent,
         BookmarkFormComponent,
+        ResourceComponent,
         PieChartComponent,
         LineChartComponent,
         AlertComponent,

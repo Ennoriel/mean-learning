@@ -8,7 +8,8 @@ import {
     MatCardModule,
     MatTabsModule,
     MatStepperModule,
-    MatIconModule
+    MatIconModule,
+    MatMenuModule
 } from '@angular/material';
 
 const importsExports = [
@@ -19,7 +20,8 @@ const importsExports = [
     MatCardModule,
     MatTabsModule,
     MatStepperModule,
-    MatIconModule
+    MatIconModule,
+    MatMenuModule
 ];
 
 /**

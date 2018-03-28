@@ -6,11 +6,13 @@ import { RegisterComponent } from './logging/register/register.component';
 import { AlphaVantageComponent } from './alpha-vantage/alpha-vantage.component';
 import { BookmarkComponent } from './bookmark/bookmark.component';
 import { AccueilComponent } from './accueil/accueil.component';
+import { ResourceComponent } from './bookmark/resource/resource/resource.component';
 
 const appRoutes: Routes = [
     { path: '', component: AccueilComponent },
     { path: 'alpha-vantage', component: AlphaVantageComponent, canActivate: [AuthGuard] },
     { path: 'bookmark', component: BookmarkComponent, canActivate: [AuthGuard] },
+    { path: 'bookmark/resource', component: ResourceComponent, canActivate: [AuthGuard] },
     { path: 'utilisateurs', component: HomeComponent, canActivate: [AuthGuard] },
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
