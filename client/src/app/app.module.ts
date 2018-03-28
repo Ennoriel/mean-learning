@@ -10,12 +10,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { AlphaVantageComponent } from './alpha-vantage/alpha-vantage.component';
 import { AlphaVantageFormComponent } from './alpha-vantage/alpha-vantage-form/alpha-vantage-form.component';
-import { BookmarkComponent } from './bookmark/bookmark.component';
-import { BookmarkFormComponent } from './bookmark/bookmark-form/bookmark-form.component';
+import { BookmarkComponent } from './bookmark/bookmark/bookmark.component';
+import { BookmarkFormComponent } from './bookmark/bookmark/bookmark-form/bookmark-form.component';
 
 import { AlphaVantageApiService } from './alpha-vantage/shared/alpha-vantage-api.service';
 import { AlphaVantageRepositoryService } from './alpha-vantage/shared/alpha-vantage-repository.service';
-import { BookmarkRepositoryService } from './bookmark/shared/bookmark-repository.service';
+import { BookmarkRepositoryService } from './bookmark/bookmark/shared/bookmark-repository.service';
 // import { BookmarkTypesService } from './bookmark/shared/bookmark-types.service';
 import { GooglePieChartService } from './shared/services/google-pie-chart.service';
 import { GoogleLineChartService } from './shared/services/google-line-chart.service';

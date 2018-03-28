@@ -8,7 +8,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import { Bookmark, PersistedBookmark, BookmarkSO } from './bookmark-types.service';
 
-import { appConfig } from '../../app.config';
+import { appConfig } from '../../../app.config';
 
 @Injectable()
 export class BookmarkRepositoryService {

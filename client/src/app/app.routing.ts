@@ -4,7 +4,7 @@ import { LoginComponent } from './logging/login/login.component';
 import { AuthGuard } from './shared/services/guard/auth.guard';
 import { RegisterComponent } from './logging/register/register.component';
 import { AlphaVantageComponent } from './alpha-vantage/alpha-vantage.component';
-import { BookmarkComponent } from './bookmark/bookmark.component';
+import { BookmarkComponent } from './bookmark/bookmark/bookmark.component';
 import { AccueilComponent } from './accueil/accueil.component';
 import { ResourceComponent } from './bookmark/resource/resource/resource.component';
 
