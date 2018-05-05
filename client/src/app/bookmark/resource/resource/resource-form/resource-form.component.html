@@ -1,0 +1,22 @@
+<mat-card>
+    <h1>{{ title }}</h1>
+    <form [formGroup]="formGroup">
+
+        <mat-form-field>
+            <input matInput formControlName="name" [(ngModel)]="modelCopy.resource.name" placeholder="Resource name?">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput formControlName="link" [(ngModel)]="modelCopy.resource.link" placeholder="Resource link?">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-select placeholder="Bookmark to link" formControlName="bookmark" [(ngModel)]="modelCopy._id">
+                <mat-option *ngFor="let bookmark of bookmarks" [value]="bookmark._id">{{ bookmark.name }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        
+        <button mat-button (click)="saveResource()">
+            <mat-icon class="mat-icon-save">save</mat-icon>
+            Save resource
+        </button>
+    </form>
+</mat-card>

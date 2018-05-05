@@ -35,6 +35,10 @@ import { AuthenticationService } from './shared/services/authentication.service'
 import { RouterService } from './shared/services/router.service';
 import { AccueilComponent } from './accueil/accueil.component';
 import { ResourceComponent } from './bookmark/resource/resource/resource.component';
+import { ResourceRepository } from './bookmark/resource/shared/resource.repository';
+import { ResourceFormComponent } from './bookmark/resource/resource/resource-form/resource-form.component';
+import { HttpHelper } from './shared/services/helpers/http.helper';
+import { CopyService } from './shared/services/utils/copy.service';
 
 // const myRoots: Routes = [
 //     { path: '', redirectTo: '/bookmark', pathMatch: 'full' },
@@ -50,14 +54,15 @@ import { ResourceComponent } from './bookmark/resource/resource/resource.compone
         BookmarkComponent,
         BookmarkFormComponent,
         ResourceComponent,
+        ResourceFormComponent,
         PieChartComponent,
         LineChartComponent,
         AlertComponent,
         HomeComponent,
         LoginComponent,
         RegisterComponent,
-    AccueilComponent
-],
+        AccueilComponent
+    ],
     imports: [
         BrowserModule,
         HttpClientModule,
@@ -72,11 +77,14 @@ import { ResourceComponent } from './bookmark/resource/resource/resource.compone
         AlphaVantageApiService,
         AlphaVantageRepositoryService,
         BookmarkRepositoryService,
+        ResourceRepository,
+        HttpHelper,
         GooglePieChartService,
         GoogleLineChartService,
         AuthGuard,
         AlertService,
         AuthenticationService,
+        CopyService,
         UserService,
         JwtInterceptorProvider,
         ErrorInterceptorProvider,

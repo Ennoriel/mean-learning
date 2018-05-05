@@ -9,7 +9,9 @@ import {
     MatTabsModule,
     MatStepperModule,
     MatIconModule,
-    MatMenuModule
+    MatMenuModule,
+    MatOptionModule,
+    MatSelectModule
 } from '@angular/material';
 
 const importsExports = [
@@ -21,7 +23,9 @@ const importsExports = [
     MatTabsModule,
     MatStepperModule,
     MatIconModule,
-    MatMenuModule
+    MatMenuModule,
+    MatOptionModule,
+    MatSelectModule
 ];
 
 /**

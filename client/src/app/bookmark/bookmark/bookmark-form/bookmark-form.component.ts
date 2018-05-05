@@ -7,8 +7,9 @@ import {
 import {  } from 'protractor';
 import { BookmarkRepositoryService } from '../shared/bookmark-repository.service';
 import { Observable } from 'rxjs/Observable';
-import { PersistedBookmark, PersistedResource } from '../shared/bookmark-types.service';
+import { PersistedBookmark } from '../shared/bookmark-types.service';
 import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
+import { PersistedResource } from '../../resource/shared/resource.types';
 @Component({
   selector: 'app-bookmark-form',
   templateUrl: './bookmark-form.component.html',

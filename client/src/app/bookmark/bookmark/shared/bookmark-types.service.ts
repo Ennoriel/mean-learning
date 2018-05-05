@@ -1,15 +1,4 @@
-export interface PersistedResource {
-    name?: String;
-    link?: String;
-}
-
-export class PersistedResource implements PersistedResource {
-    name?: String;
-    link?: String;
-
-    constructor () {
-    }
-}
+import { PersistedResource } from '../../resource/shared/resource.types';
 
 export interface PersistedBookmark {
     name?: String;
@@ -36,5 +25,5 @@ export class Bookmark {
 export class BookmarkSO {
     name: String;
     resourceName: String;
-    resourceLink: String;
+    resourceUrl: String;
 }

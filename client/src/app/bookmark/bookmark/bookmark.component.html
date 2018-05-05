@@ -33,7 +33,18 @@
 			<h1>Bookmarks Searched</h1>
 			<div *ngFor="let bookmark of searchedBookmarks; index as index">
 				<mat-card>
-					<pre>{{ bookmark | json }}</pre>
+					<pre>_id: {{ bookmark.persisted._id | json }}</pre>
+                    <pre>name: {{ bookmark.persisted.name | json }}</pre>
+                    <div *ngFor="let resource of bookmark.persisted.resources">
+                        <mat-card>
+                            <pre>resource: {{ resource | json }}</pre>
+                            <button mat-button (click)="showUpdateResourceForm(bookmark.persisted._id, resource)">
+                                <mat-icon class="mat-icon-create">create</mat-icon>
+                                Update resource
+                            </button>
+                        </mat-card>
+                        <br/>
+                    </div>
 					<button mat-button (click)="showUpdateForm(bookmark)">
 						<mat-icon class="mat-icon-create">create</mat-icon>
 						Update bookmark
@@ -57,7 +68,7 @@
 		<br *ngIf="!!savedBookmarks">
 
 		<mat-card *ngIf="!!savedBookmarks">
-			<h1>Bookmark Saved</h1>
+			<h1>Bookmark<span *ngIf="savedBookmarks.length > 1">s</span> Saved</h1>
 			<div *ngFor="let savedBookmark of savedBookmarks; first as isFirst">
 				<br *ngIf="!isFirst">
 				<mat-card>
@@ -65,6 +76,5 @@
 				</mat-card>
 			</div>
 		</mat-card>
-
 	</mat-tab>
 </mat-tab-group>

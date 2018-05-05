@@ -1,3 +1,75 @@
-<p>
-  resource works!
-</p>
+<mat-tab-group>
+	<!-- SEARCH A RESOURCE -->
+	<mat-tab label="Search a resource">
+
+		<mat-card>
+			<h1>Search a Resource</h1>
+			<mat-form-field>
+				<input matInput [(ngModel)]="resourceToSearch.name" placeholder="Name of the bookmark?">
+			</mat-form-field>
+
+			<mat-form-field>
+				<input matInput [(ngModel)]="resourceToSearch.resourceName" placeholder="Name of  the resources?">
+			</mat-form-field>
+
+			<mat-form-field>
+				<input matInput [(ngModel)]="resourceToSearch.resourceUrl" placeholder="Url of the resources?">
+			</mat-form-field>
+
+			<button mat-button (click)="searchResources()">
+				<mat-icon class="mat-icon-search">search</mat-icon>
+				Search resources
+			</button>
+			<button mat-button (click)="initSearch()">
+				<mat-icon class="mat-icon-replay">replay</mat-icon>
+				Reset search criterias
+			</button>
+			<mat-spinner [style.display]="showSearchSpinner ? 'block' : 'none'"></mat-spinner>
+		</mat-card>
+
+		<br *ngIf="!!searchedResources">
+
+		<mat-card *ngIf="!!searchedResources">
+			<h1>Resources Searched</h1>
+			<div *ngFor="let resource of searchedResources; index as index">
+				<mat-card>
+					<pre>name: {{ resource.resource.name | json }}</pre>
+                    <pre>link: {{ resource.resource.link | json }}</pre>
+					<button mat-button (click)="showUpdateForm(resource)">
+						<mat-icon class="mat-icon-create">create</mat-icon>
+						Update resource
+					</button>
+					<button mat-button (click)="deleteResource(resource, index)">
+						<mat-icon class="mat-icon-delete_forever">delete_forever</mat-icon>
+						Delete resource
+					</button>
+                    <app-resource-form
+                        *ngIf="resource.showUpdateInputs"
+                        [(model)]="searchedResources[index]"
+                        (afterResourceSaved)="displayResourceUpdated($event)">
+					</app-resource-form>
+				</mat-card>
+				<br />
+			</div>
+		</mat-card>
+	</mat-tab>
+
+	<!-- SAVE A RESOURCE -->
+	<mat-tab label="Save a new resource">
+        <app-resource-form
+            (afterResourceSaved)="displayResourceSaved($event)">
+        </app-resource-form>
+        
+		<br *ngIf="!!savedResources">
+
+		<mat-card *ngIf="!!savedResources">
+			<h1>Resource<span *ngIf="savedResources.length > 1">s</span> Saved</h1>
+			<div *ngFor="let savedResource of savedResources; first as isFirst">
+				<br *ngIf="!isFirst">
+				<mat-card>
+					<pre>{{ savedResource | json }}</pre>
+				</mat-card>
+			</div>
+		</mat-card>
+	</mat-tab>
+</mat-tab-group>
