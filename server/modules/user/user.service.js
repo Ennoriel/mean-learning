@@ -96,14 +96,14 @@ function create(userParam) {
         // add hashed password to user object
         user.hash = bcrypt.hashSync(userParam.password, 10);
         
- 
         mongoDb.MongoClient.connect(DB_CREDENTIALS.URI, function(err, db) {
+                        
+            if (err) deferred.reject(err.name + ': ' + err.message);
+
             db.db(DB_CREDENTIALS.DBNAME)
                     .collection('users')
                     .insert(user)
                     .then(() => {
-                        
-                if (err) deferred.reject(err.name + ': ' + err.message);
 
                 deferred.resolve();
             });

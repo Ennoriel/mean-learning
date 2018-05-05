@@ -13,14 +13,18 @@ const commandLineUtils = require('./utils/commandLineUtils.js');
 /**
  * Routes
  */
-const bookmarkSearchRoute = require('./modules/bookmark');
-const AlphaVantageRoute = require('./modules/alphaVantage');
-const errorHandlerRoute = require('./modules/error');
+const logRoutes = require('./shared/log/log.routes')
+const bookmarkSearchRoutes = require('./modules/bookmark');
+const resourceSearchRoutes = require('./modules/resource');
+const AlphaVantageRoutes = require('./modules/alphaVantage');
+const errorHandlerRoutes = require('./modules/error');
 
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+app.use(logRoutes);
 
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "http://localhost:4200");
@@ -53,8 +57,9 @@ app.use(expressJwt({
 
 app.use('/users', require('./modules/user/routes'));
 
-app.use(bookmarkSearchRoute);
-app.use(AlphaVantageRoute);
+app.use(resourceSearchRoutes);
+app.use(bookmarkSearchRoutes);
+app.use(AlphaVantageRoutes);
 // app.use(errorHandlerRoute);
 
 /**

@@ -1,4 +1,4 @@
-const lodashSet = require('lodash/set');
+const queryService = require("./../../shared/query.service");
 
 module.exports = {
 
@@ -49,37 +49,9 @@ function setQuery(parsedUrl) {
 
     let query = {};
 
-    setStringQuery(query, 'name', parsedUrl.name);
-    setArrayQuery(query, 'resources', 'name', parsedUrl.resourceName);
-    setArrayQuery(query, 'resources', 'link', parsedUrl.resourceUrl);
+    queryService.setRegexStringQuery(query, 'name', parsedUrl.name);
+    queryService.setRegexArrayQuery(query, 'resources', 'name', parsedUrl.resourceName);
+    queryService.setRegexArrayQuery(query, 'resources', 'link', parsedUrl.resourceUrl);
 
     return query;
-}
-
-/**
- * Add a string criteria to the db query
- * @param {Object} query db query
- * @param {String} paramKey db param
- * @param {String} paramValue param value
- */
-function setStringQuery(query, paramKey, paramValue) {
-    if(paramValue) {
-        query[paramKey] = {
-            '$regex': paramValue,
-            '$options': 'i'
-        }
-    }
-}
-
-/**
- * Add an array criteria to the db query
- * @param {Object} query db query
- * @param {String} arrayKey db param
- * @param {String} paramKey db param
- * @param {String} paramValue param value
- */
-function setArrayQuery(query, arrayKey, paramKey, paramValue) {
-    if(paramValue) {
-        query[arrayKey + '.' + paramKey] = paramValue;
-    }
 }
