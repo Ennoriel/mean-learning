@@ -1,5 +1,4 @@
 const express = require('express');
-const engines = require('consolidate');
 const mongoDb = require('mongodb');
 const bodyParser = require('body-parser');
 const ObjectId = mongoDb.ObjectID;
@@ -12,11 +11,6 @@ const app = module.exports = express();
 
 app.use(bodyParser.json({"strict": true}));
 app.use(bodyParser.urlencoded({ extended: true }));
-
-// HTML conf
-app.engine('html', engines.nunjucks);
-app.set('view engine', 'html');
-app.set('views', __dirname + '/views');
 
 /**
  * Search bookmarks
